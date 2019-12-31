@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/gtcloud-orclsvc-yqbjgh.iml" filepath="$PROJECT_DIR$/gtcloud-orclsvc-yqbjgh.iml" group="gtcloud-orclsvc-yqbjgh" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gtcloud-orclsvc-yqbjgh_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gtcloud-orclsvc-yqbjgh_main.iml" group="gtcloud-orclsvc-yqbjgh" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gtcloud-orclsvc-yqbjgh_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gtcloud-orclsvc-yqbjgh_test.iml" group="gtcloud-orclsvc-yqbjgh" />
+    </modules>
+  </component>
+</project>
