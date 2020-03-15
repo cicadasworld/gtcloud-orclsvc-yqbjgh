@@ -1,10 +1,8 @@
 buildscript {
-    ext {
-        springBootVersion = '2.2.2.RELEASE'
-    }
+    ext.springBootVersion = '2.1.9.RELEASE'
     repositories {
         maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url 'http://129.0.3.135:28000/maven2/'
         }
     }
     dependencies {
@@ -15,45 +13,36 @@ buildscript {
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'java'
+apply plugin: 'groovy'
 
-bootJar {
-    baseName = 'gtcloud-orclsvc-yqbjgh'
-    version = '0.1.0'
-}
+group = 'gtcloud-orclsvc-yqbjgh'
+version = '1.0.0'
 
 ext {
-    swaggerVersion = '2.7.0'
     ojdbcVersion = '11.2.0.1.0'
     geoToolsVersion = '22.0'
+    shaencoderVersion = '1.0.0'
+    spockVersion = '1.3-groovy-2.5'
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.codehaus.groovy:groovy'
     implementation "com.oracle:ojdbc6:${ojdbcVersion}"
-    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
-    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
-    implementation "org.geotools:gt-main:${geoToolsVersion}"
+    implementation "gtcloud.yqbjgh.security:shaencoder:${shaencoderVersion}"
+    implementation("org.geotools:gt-geojson:${geoToolsVersion}") {
+        exclude group: 'javax', module: 'javaee-api'
+    }
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = "gbk"
+    testImplementation "org.spockframework:spock-core:${spockVersion}"
+    testImplementation "org.spockframework:spock-spring:${spockVersion}"
 }
 
 repositories {
     maven {
-        url 'http://maven.aliyun.com/nexus/content/groups/public/'
-    }
-    maven {
-        url 'http://download.java.net/maven/2'
-    }
-    maven {
-        url 'http://download.osgeo.org/webdav/geotools/'
-    }
-    maven {
-        url 'http://repo.boundlessgeo.com/main'
+        url 'http://129.0.3.135:28000/maven2/'
     }
 }
