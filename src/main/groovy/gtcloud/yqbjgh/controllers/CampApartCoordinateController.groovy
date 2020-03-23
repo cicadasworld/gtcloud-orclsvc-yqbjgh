@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class CampApartCoordinateController {
 
     @Autowired
-    private CampApartCoordinateService service
+    CampApartCoordinateService service
 
     @GetMapping(value = "/camp-apart-coordinate/{apartId}")
     List<CampApartCoordinateDTO> getCampApartCoordinate(@PathVariable String apartId) {
@@ -22,7 +22,8 @@ class CampApartCoordinateController {
     }
 
     @PutMapping(value = "/camp-apart-coordinate/{jlbm}")
-    CampApartCoordinateDTO updateCampApartCoordinate(@PathVariable String jlbm, @RequestBody CampApartCoordinateDTO dto) {
+    CampApartCoordinateDTO updateCampApartCoordinate(
+            @PathVariable String jlbm, @RequestBody CampApartCoordinateDTO dto) {
         return service.updateCampApartCoordinate(jlbm, dto)
     }
 

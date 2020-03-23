@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicMaterialKindServiceImpl implements CampDicMaterialKindService {
 
     @Autowired
-    private CampDicMaterialKindRepository repository
+    CampDicMaterialKindRepository repository
 
     @Override
     CampDicMaterialKind getById(String id) {

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface TxzyTsZbgcRepository extends JpaRepository<TxzyTsZbgc, String> {
 
-	List<TxzyTsZbgc> findBySjcjdwnm(String sjcjdwnm)
+    List<TxzyTsZbgc> findBySjcjdwnm(String sjcjdwnm)
 
     boolean existsBySjcjdwnm(String id)
 

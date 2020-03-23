@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CampCoordinateRepository extends JpaRepository<CampCoordinate, String> {
 
-	List<CampCoordinate> findByFid(String fid, Sort sort)
+    List<CampCoordinate> findByFid(String fid, Sort sort)
 
 }

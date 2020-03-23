@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController
 class CampDicSiteKindController {
 
     @Autowired
-    private CampDicSiteKindService service
+    CampDicSiteKindService service
 
-	@GetMapping(value = "/camp-dic-site-kind")
-	List<CampDicSiteKind> getCampDicSiteKindList() {
+    @GetMapping(value = "/camp-dic-site-kind")
+    List<CampDicSiteKind> getCampDicSiteKindList() {
         return service.listAll()
-	}
+    }
 }

@@ -10,10 +10,15 @@ import org.springframework.stereotype.Service
 class CampDicBarrackUseClassServiceImpl implements CampDicBarrackUseClassService {
 
     @Autowired
-    private CampDicBarrackUseClassRepository repository
+    CampDicBarrackUseClassRepository repository
 
     @Override
     CampDicBarrackUseClass getById(String id) {
         return repository.findById(id).orElse(null)
+    }
+
+    @Override
+    List<CampDicBarrackUseClass> listAll() {
+        return repository.findAll()
     }
 }

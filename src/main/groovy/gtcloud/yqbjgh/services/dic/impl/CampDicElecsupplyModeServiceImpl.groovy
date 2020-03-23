@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicElecsupplyModeServiceImpl implements CampDicElecsupplyModeService {
 
     @Autowired
-    private CampDicElecsupplyModeRepository repository
+    CampDicElecsupplyModeRepository repository
 
     @Override
     CampDicElecsupplyMode getById(String id) {

@@ -13,18 +13,18 @@ import static java.util.stream.Collectors.toList
 @Service
 class ResidentUnitServiceImpl implements ResidentUnitService {
 
-	@Autowired
-    private ResidentUnitRepository repository
+    @Autowired
+    ResidentUnitRepository repository
 
     @Autowired
-    private ResidentUnitToResidentUnitDTO converter
+    ResidentUnitToResidentUnitDTO converter
 
     @Override
     List<ResidentUnitDTO> getResidentUnit(String bdnm) {
         List<ResidentUnit> residentUnits = this.getByBdnm(bdnm)
-        return residentUnits.stream()
-                .map{residentUnit -> converter.convert(residentUnit)}
-                .collect(toList())
+        return residentUnits.stream().
+                map { residentUnit -> converter.convert(residentUnit) }.
+                collect(toList())
     }
 
     List<ResidentUnit> getByBdnm(String bdnm) {
@@ -33,13 +33,9 @@ class ResidentUnitServiceImpl implements ResidentUnitService {
 
     @Override
     List<ResidentUnitDTO> getResidentUnitByCampId(String campId) {
-        List<ResidentUnit> residentUnits = this.getByUseingCampId(campId)
-        return residentUnits.stream()
-                .map{residentUnit -> converter.convert(residentUnit)}
-                .collect(toList())
-    }
-
-    List<ResidentUnit> getByUseingCampId(String campId) {
-        return repository.findByUseingCampId(campId)
+        List<ResidentUnit> residentUnits = repository.findByUsingCampId(campId)
+        return residentUnits.stream().
+                map { residentUnit -> converter.convert(residentUnit) }.
+                collect(toList())
     }
 }

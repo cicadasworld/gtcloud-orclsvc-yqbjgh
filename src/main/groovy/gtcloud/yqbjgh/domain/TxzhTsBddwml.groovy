@@ -6,29 +6,29 @@ import javax.persistence.Id
 @Entity
 class TxzhTsBddwml {
 
-	@Id
-	String nm
+    @Id
+    String nm
 
-	String mc
+    String mc
 
-	String xh
+    String xh
 
-	String bdhfnm
+    String bdhfnm
 
-	String bdhf
+    String bdhf
 
-	String bdjc
+    String bdjc
 
-	String bzxh
+    String bzxh
 
-	String bzfh
+    String bzfh
 
-	String bzjc
+    String bzjc
 
-	String zzbd
+    String zzbd
 
-	String parentnm
+    String parentnm
 
-	String resident
+    String resident
 
 }

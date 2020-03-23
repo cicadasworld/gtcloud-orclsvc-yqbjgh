@@ -20,19 +20,19 @@ import static java.util.stream.Collectors.toList
 class VUnitInforToVUnitInforDTO implements Converter<VUnitInfor, VUnitInforDTO> {
 
     @Autowired
-    private TxzhTsBddwmlService bddwmlService
+    TxzhTsBddwmlService bddwmlService
 
     @Autowired
-    private VUnitInforRepository vUnitInforRepository
+    VUnitInforRepository vUnitInforRepository
 
     @Autowired
-    private ResidentDicAdminDivisionRepository adminDivisionRepository
+    ResidentDicAdminDivisionRepository residentDicAdminDivisionRepository
 
     @Autowired
-    private ResidentDicUnitKindRepository unitKindRepository
+    ResidentDicUnitKindRepository residentDicUnitKindRepository
 
     @Autowired
-    private ResidentDicUnitGradeRepository unitGradeRepository
+    ResidentDicUnitGradeRepository residentDicUnitGradeRepository
 
     @Override
     VUnitInforDTO convert(VUnitInfor source) {
@@ -56,21 +56,25 @@ class VUnitInforToVUnitInforDTO implements Converter<VUnitInfor, VUnitInforDTO> 
             target.parentnm = source.parentnm
             target.jlbm = source.jlbm
 
+            //adminDivision -> adminDivision名称
             String adminDivision = source.adminDivision
-            Optional<ResidentDicAdminDivision> optAdminDivision = adminDivisionRepository.findById(adminDivision)
-            optAdminDivision.ifPresent{dic -> target.adminDivision = dic.mc} //adminDivision -> adminDivision名称
+            Optional<ResidentDicAdminDivision> optAdminDivision =
+                    residentDicAdminDivisionRepository.findById(adminDivision ?: "")
+            optAdminDivision.ifPresent { dic -> target.adminDivision = dic.mc }
 
             target.detailAddress = source.detailAddress
 
+            //unitKind -> unitKind名称
             String unitKind = source.unitKind
-            Optional<ResidentDicUnitKind> optUnitKind = unitKindRepository.findById(unitKind)
-            optUnitKind.ifPresent{dic -> target.unitKind = dic.mc}  //unitKind -> unitKind名称
+            Optional<ResidentDicUnitKind> optUnitKind = residentDicUnitKindRepository.findById(unitKind ?: "")
+            optUnitKind.ifPresent { dic -> target.unitKind = dic.mc }
 
+            //unitGrade -> unitGrade名称
             String unitGrade = source.unitGrade
-            Optional<ResidentDicUnitGrade> optUnitGrade = unitGradeRepository.findById(unitGrade)
-            optUnitGrade.ifPresent{dic -> target.unitGrade = dic.mc} //unitGrade -> unitGrade名称
+            Optional<ResidentDicUnitGrade> optUnitGrade = residentDicUnitGradeRepository.findById(unitGrade ?: "")
+            optUnitGrade.ifPresent { dic -> target.unitGrade = dic.mc }
 
-            target.useingCampId = source.useingCampId
+            target.usingCampId = source.usingCampId
             target.soldierAuthorizedNum = source.soldierAuthorizedNum
             target.soldierRealityNum = source.soldierRealityNum
             target.employeeAuthorizedNum = source.employeeAuthorizedNum
@@ -82,10 +86,11 @@ class VUnitInforToVUnitInforDTO implements Converter<VUnitInfor, VUnitInforDTO> 
             target.mission = source.mission
             target.missionEx = source.missionEx
             target.remark = source.remark
+            target.usingApartNum = source.usingApartNum
 
             List<String> bdnms = bddwmlService.getBdnmFamily(bdnm)
             List<VUnitInfor> vUnitInfors = bdnms.stream().
-                    map{nm -> vUnitInforRepository.findByBdnm(nm)?.get()}.collect(toList())
+                    map { nm -> vUnitInforRepository.findByBdnm(nm)?.get() }.collect(toList())
             setTotalNums(vUnitInfors, target)
             return target
         }
@@ -93,25 +98,25 @@ class VUnitInforToVUnitInforDTO implements Converter<VUnitInfor, VUnitInforDTO> 
 
     private static void setTotalNums(List<VUnitInfor> vUnitInfors, VUnitInforDTO target) {
         int totalSoldierAuthorizedNum = vUnitInfors.stream().
-                mapToInt { u -> u.soldierAuthorizedNum?: 0 }.sum()
+                mapToInt { u -> u.soldierAuthorizedNum ?: 0 }.sum()
         int totalSoldierRealityNum = vUnitInfors.stream().
-                mapToInt { u -> u.soldierRealityNum?: 0 }.sum()
+                mapToInt { u -> u.soldierRealityNum ?: 0 }.sum()
 
         int totalEmployeeAuthorizedNum = vUnitInfors.stream().
-                mapToInt { u -> u.employeeAuthorizedNum?: 0 }.sum()
+                mapToInt { u -> u.employeeAuthorizedNum ?: 0 }.sum()
         int totalEmployeeRealityNum = vUnitInfors.stream().
-                mapToInt { u -> u.employeeRealityNum?: 0 }.sum()
+                mapToInt { u -> u.employeeRealityNum ?: 0 }.sum()
 
         int totalOfficerorAuthorizedNum = vUnitInfors.stream().
-                mapToInt { u -> u.officerorAuthorizedNum?: 0 }.sum()
+                mapToInt { u -> u.officerorAuthorizedNum ?: 0 }.sum()
 
         int totalOfficerRealityNum = vUnitInfors.stream().
-                mapToInt { u -> u.officerRealityNum?: 0 }.sum()
+                mapToInt { u -> u.officerRealityNum ?: 0 }.sum()
 
         int totalCivilAuthorizedNum = vUnitInfors.stream().
-                mapToInt { u -> u.civilAuthorizedNum?: 0 }.sum()
+                mapToInt { u -> u.civilAuthorizedNum ?: 0 }.sum()
         int totalCivilRealityNum = vUnitInfors.stream().
-                mapToInt { u -> u.civilRealityNum?: 0 }.sum()
+                mapToInt { u -> u.civilRealityNum ?: 0 }.sum()
 
         target.totalSoldierAuthorizedNum = totalSoldierAuthorizedNum
         target.totalSoldierRealityNum = totalSoldierRealityNum

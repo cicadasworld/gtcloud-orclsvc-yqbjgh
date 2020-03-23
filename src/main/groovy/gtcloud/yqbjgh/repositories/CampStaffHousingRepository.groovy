@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CampStaffHousingRepository extends JpaRepository<CampStaffHousing, String> {
 
-	List<CampStaffHousing> findByApartId(String apartId)
+    List<CampStaffHousing> findByApartId(String apartId)
 }

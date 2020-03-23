@@ -4,23 +4,23 @@ import com.fasterxml.jackson.annotation.JsonFormat
 
 class CampWarehouseMaterialDTO {
 
-	String jlbm
+    String jlbm
 
-	Float warArea
+    Float warArea
 
-	String materialKind
+    String materialKind
 
-	String dangerousAttr
+    String dangerousAttr
 
-	String warehouseId
+    String warehouseId
 
-	Float ccwzsl
+    Float ccwzsl
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	Date sjcjsj
+    Date sjcjsj
 
-	String sjcjry
+    String sjcjry
 
-	String campId
+    String campId
 
 }

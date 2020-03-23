@@ -13,11 +13,11 @@ import static java.util.stream.Collectors.toList
 @Service
 class CampApartCoordinateServiceImpl implements CampApartCoordinateService {
 
-	@Autowired
-    private CampApartCoordinateRepository repository
+    @Autowired
+    CampApartCoordinateRepository repository
 
     @Autowired
-    private CampApartCoordinateToCampApartCoordinateDTO converter
+    CampApartCoordinateToCampApartCoordinateDTO converter
 
     @Override
     CampApartCoordinate getById(String id) {
@@ -27,9 +27,9 @@ class CampApartCoordinateServiceImpl implements CampApartCoordinateService {
     @Override
     List<CampApartCoordinateDTO> getCampApartCoordinate(String apartId) {
         List<CampApartCoordinate> campApartCoordinates = repository.findByApartId(apartId)
-        return campApartCoordinates.stream()
-                .map{campApartCoordinate -> converter.convert(campApartCoordinate)}
-                .collect(toList())
+        return campApartCoordinates.stream().
+                map { campApartCoordinate -> converter.convert(campApartCoordinate) }.
+                collect(toList())
     }
 
     @Override
@@ -72,11 +72,9 @@ class CampApartCoordinateServiceImpl implements CampApartCoordinateService {
     @Override
     List<CampApartCoordinateDTO> deleteCampApartCoordinate(String apartId) {
         List<CampApartCoordinate> campApartCoordinates = repository.findByApartId(apartId)
-        return campApartCoordinates.stream()
-                .map{campApartCoordinate ->
-                    deleteAndReturn(repository, campApartCoordinate)
-                }
-                .collect(toList())
+        return campApartCoordinates.stream().
+                map { campApartCoordinate -> deleteAndReturn(repository, campApartCoordinate) }.
+                collect(toList())
     }
 
     CampApartCoordinateDTO deleteAndReturn(CampApartCoordinateRepository repository,

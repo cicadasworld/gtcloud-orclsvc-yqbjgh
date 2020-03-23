@@ -8,36 +8,38 @@ import javax.persistence.Id
 @Entity
 class CampLocation {
 
-	@Id
-	String jlbm
+    @Id
+    String jlbm
 
-	String nm
+    String nm
 
-	String campWord
+    String campWord
 
-	String campCode
+    String campCode
 
-	String campKind
+    String campKind
 
-	String adminDivision
+    String adminDivision
 
-	String detailAddress
+    String detailAddress
 
-	Float campArea
+    Float campArea
 
-	String siteKind
+    String siteKind
 
-	String watersupplyMode
+    String watersupplyMode
 
-	String elecsupplyMode
+    String elecsupplyMode
 
-	String gassupplyMode
+    String gassupplyMode
 
-	String heatsupplyMode
+    String heatsupplyMode
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	Date sjcjsj
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    Date sjcjsj
 
-	String sjcjry
+    String sjcjry
+
+    String realorvirtual
 
 }

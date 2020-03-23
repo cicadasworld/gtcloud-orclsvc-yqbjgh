@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicQualityGradeServiceImpl implements CampDicQualityGradeService {
 
     @Autowired
-    private CampDicQualityGradeRepository repository
+    CampDicQualityGradeRepository repository
 
     @Override
     CampDicQualityGrade getById(String id) {

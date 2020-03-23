@@ -8,24 +8,24 @@ import javax.persistence.Id
 @Entity
 class CampBatgroundFacilities {
 
-	@Id
-	String jlbm
+    @Id
+    String jlbm
 
-	String campId
+    String campId
 
-	String batName
+    String batName
 
-	String batKind
+    String batKind
 
-	Float batArea
+    Float batArea
 
-	String batFunction
+    String batFunction
 
-	String managementUnit
+    String managementUnit
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	Date sjcjsj
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    Date sjcjsj
 
-	String sjcjry
+    String sjcjry
 
 }

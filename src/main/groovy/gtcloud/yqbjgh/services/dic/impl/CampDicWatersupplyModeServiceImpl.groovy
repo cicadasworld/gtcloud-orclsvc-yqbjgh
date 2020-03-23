@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicWatersupplyModeServiceImpl implements CampDicWatersupplyModeService {
 
     @Autowired
-    private CampDicWatersupplyModeRepository repository
+    CampDicWatersupplyModeRepository repository
 
     @Override
     CampDicWatersupplyMode getById(String id) {

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 @Service
 class CampLocationServiceImpl implements CampLocationService {
 
-	@Autowired
-    private CampLocationRepository repository
+    @Autowired
+    CampLocationRepository repository
 
     @Override
     CampLocation getById(String id) {

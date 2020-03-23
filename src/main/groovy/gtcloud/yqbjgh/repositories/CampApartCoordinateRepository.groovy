@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CampApartCoordinateRepository extends JpaRepository<CampApartCoordinate, String> {
 
-	List<CampApartCoordinate> findByApartId(String apartId)
+    List<CampApartCoordinate> findByApartId(String apartId)
 
 }

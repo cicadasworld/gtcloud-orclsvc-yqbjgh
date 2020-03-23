@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class CampBatgroundFacilitiesController {
 
-	@Autowired
-    private CampBatgroundFacilitiesService service
+    @Autowired
+    CampBatgroundFacilitiesService service
 
-	@GetMapping(value = "/camp-batground-facilities/{campId}")
-	List<CampBatgroundFacilitiesDTO> getCampBatgroundFacilities(@PathVariable String campId) {
+    @GetMapping(value = "/camp-batground-facilities/{campId}")
+    List<CampBatgroundFacilitiesDTO> getCampBatgroundFacilities(@PathVariable String campId) {
         return service.getCampBatgroundFacilities(campId)
-	}
+    }
 }

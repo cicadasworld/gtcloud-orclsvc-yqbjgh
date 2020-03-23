@@ -48,4 +48,6 @@ class VCampLocationDTO {
 
     String fillOpacity
 
+    String realorvirtual
+
 }

@@ -14,33 +14,35 @@ import org.springframework.stereotype.Component
 class CampWarehouseMaterialToCampWarehouseMaterialDTO implements Converter<CampWarehouseMaterial, CampWarehouseMaterialDTO> {
 
     @Autowired
-    private CampDicMaterialKindRepository campDicMaterialKindRepository
+    CampDicMaterialKindRepository campDicMaterialKindRepository
 
     @Autowired
-    private CampDicDangerousAttrRepository campDicDangerousAttrRepository
+    CampDicDangerousAttrRepository campDicDangerousAttrRepository
 
-	@Override
-	CampWarehouseMaterialDTO convert(CampWarehouseMaterial source) {
-		CampWarehouseMaterialDTO target = new CampWarehouseMaterialDTO()
-		target.jlbm = source.jlbm
-		target.warArea = source.warArea
+    @Override
+    CampWarehouseMaterialDTO convert(CampWarehouseMaterial source) {
+        CampWarehouseMaterialDTO target = new CampWarehouseMaterialDTO()
+        target.jlbm = source.jlbm
+        target.warArea = source.warArea
 
-        Optional<CampDicMaterialKind> optionalCampDicMaterialKind =
-                campDicMaterialKindRepository.findById(source.materialKind)
-        optionalCampDicMaterialKind.ifPresent{campDicMaterialKind ->
-                target.materialKind = campDicMaterialKind.mc}
+        // materialKind -> materialKindÃû³Æ
+        String materialKind = source.materialKind
+        Optional<CampDicMaterialKind> optMaterialKind =
+                campDicMaterialKindRepository.findById(materialKind ?: "")
+        optMaterialKind.ifPresent { dic -> target.materialKind = dic.mc }
 
-        Optional<CampDicDangerousAttr> optionalCampDicDangerousAttr =
-                campDicDangerousAttrRepository.findById(source.dangerousAttr)
-        optionalCampDicDangerousAttr.ifPresent{campDicDangerousAttr ->
-                target.dangerousAttr = campDicDangerousAttr.mc}
+        // dangerousAttr -> dangerousAttrÃû³Æ
+        String dangerousAttr = source.dangerousAttr
+        Optional<CampDicDangerousAttr> optDangerousAttr =
+                campDicDangerousAttrRepository.findById(dangerousAttr ?: "")
+        optDangerousAttr.ifPresent { dic -> target.dangerousAttr = dic.mc }
 
-		target.warehouseId = source.warehouseId
-		target.ccwzsl = source.ccwzsl
-		target.sjcjsj = source.sjcjsj
-		target.sjcjry = source.sjcjry
-		target.campId = source.campId
-		return target;
-	}
+        target.warehouseId = source.warehouseId
+        target.ccwzsl = source.ccwzsl
+        target.sjcjsj = source.sjcjsj
+        target.sjcjry = source.sjcjry
+        target.campId = source.campId
+        return target
+    }
 
 }

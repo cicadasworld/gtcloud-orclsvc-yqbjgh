@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserLoginController {
 
     @Autowired
-    private UserLoginService service
+    UserLoginService service
 
     @GetMapping(value = "/UserLogin")
     String[] login(@RequestParam("id") String username, @RequestParam("pwd") String password) {

@@ -13,8 +13,6 @@ interface VCampLocationService {
 
     List<VCampLocationDTO> getVManagedCampLocationsByBdnm(String id)
 
-    List<VCampLocationDTO> queryCampLocationByRect(Double leftBound, Double bottomBound, Double rightBound, Double topBound)
-
     List<VCampLocationDTO> queryCampLocationByPolygon(Polygon polygon)
 
     List<VCampLocationDTO> queryCampLocationByCircle(Double lat, Double lng, Double radius)

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class CampStaffHousingController {
 
     @Autowired
-    private CampStaffHousingService service
+    CampStaffHousingService service
 
     @GetMapping(value = "/camp-staff-housing/{apartId}")
     List<CampStaffHousingDTO> getCampStaffHousing(@PathVariable String apartId) {

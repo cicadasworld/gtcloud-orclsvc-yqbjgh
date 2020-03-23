@@ -1,6 +1,5 @@
 package gtcloud.yqbjgh.converters
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import gtcloud.yqbjgh.domain.CampCoordinate
 import gtcloud.yqbjgh.domain.VApartCoordinateJson
@@ -19,17 +18,17 @@ import static java.util.stream.Collectors.toList
 @Component
 class VUseCampLocationToVUseCampLocationDTO implements Converter<VUseCampLocation, VUseCampLocationDTO> {
 
-	@Autowired
-    private CampCoordinateRepository campCoordinateRepository
+    @Autowired
+    CampCoordinateRepository campCoordinateRepository
 
     @Autowired
-    private VApartCoordinateJsonRepository vApartCoordinateJsonRepository
+    VApartCoordinateJsonRepository vApartCoordinateJsonRepository
 
     @Autowired
-    private ObjectMapper objectMapper
+    ObjectMapper objectMapper
 
     @Override
-	VUseCampLocationDTO convert(VUseCampLocation source) {
+    VUseCampLocationDTO convert(VUseCampLocation source) {
         final String dknm = source.dknm
         final String bdnm = source.bdnm
         VUseCampLocationDTO target = new VUseCampLocationDTO()
@@ -59,9 +58,9 @@ class VUseCampLocationToVUseCampLocationDTO implements Converter<VUseCampLocatio
 
         List<VApartCoordinateJson> vApartCoordinateJsons = vApartCoordinateJsonRepository.findByCampId(dknm)
         List<ApartInfo> aparts = vApartCoordinateJsons.stream()
-                .map{vApartCoordinateJson ->
-                    deserializeApart(vApartCoordinateJson)
-                }.collect(toList())
+                .map { vApartCoordinateJson ->
+            deserializeApart(vApartCoordinateJson)
+        }.collect(toList())
         target.aparts = aparts
 
         target.lineColor = source.lineColor
@@ -70,18 +69,14 @@ class VUseCampLocationToVUseCampLocationDTO implements Converter<VUseCampLocatio
 
         target.useBdnm = source.useBdnm
         target.useBdmc = source.useBdmc
+        target.realorvirtual = source.realorvirtual
 
         return target
-	}
+    }
 
     ApartInfo deserializeApart(VApartCoordinateJson vApartCoordinateJson) {
         String apartInfo = vApartCoordinateJson.apartInfo
-        try {
-            ApartInfo apart = objectMapper.readValue(apartInfo, ApartInfo)
-            return apart
-        } catch (IOException e) {
-            e.printStackTrace()
-        }
-        return null
+        ApartInfo apart = objectMapper.readValue(apartInfo, ApartInfo)
+        return apart
     }
 }

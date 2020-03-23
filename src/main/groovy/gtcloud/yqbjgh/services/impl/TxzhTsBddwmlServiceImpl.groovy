@@ -2,7 +2,6 @@ package gtcloud.yqbjgh.services.impl
 
 import gtcloud.yqbjgh.bootstrap.BddwmlNodeBean
 import gtcloud.yqbjgh.bootstrap.RootIdsBean
-import gtcloud.yqbjgh.domain.CampApartUseclass
 import gtcloud.yqbjgh.domain.ResidentUnit
 import gtcloud.yqbjgh.domain.TxzhTsBddwml
 import gtcloud.yqbjgh.model.BddwmlNode
@@ -24,32 +23,32 @@ import static java.util.stream.Collectors.toList
 @Service
 class TxzhTsBddwmlServiceImpl implements TxzhTsBddwmlService {
 
-	@Autowired
-    private TxzhTsBddwmlRepository bddwmlRepo
-
-	@Autowired
-    private TxzyTsZbgcRepository zbgcRepo
-
-	@Autowired
-    private CampApartUseclassRepository campApartUseclassRepo
+    @Autowired
+    TxzhTsBddwmlRepository bddwmlRepo
 
     @Autowired
-    private ResidentUnitRepository residentUnitRepo
+    TxzyTsZbgcRepository zbgcRepo
 
     @Autowired
-    private RootIdsBean rootIdsBean
+    CampApartUseclassRepository campApartUseclassRepo
 
     @Autowired
-    private BddwmlNodeBean bddwmlNodeBean
+    ResidentUnitRepository residentUnitRepo
 
     @Autowired
-    private ResidentDicUnitGradeRepository residentDicUnitGradeRepo
+    RootIdsBean rootIdsBean
 
     @Autowired
-    private ResidentDicAdminDivisionRepository residentDicAdminDivisionRepo
+    BddwmlNodeBean bddwmlNodeBean
 
     @Autowired
-    private ResidentDicUnitKindRepository residentDicUnitKindRepo
+    ResidentDicUnitGradeRepository residentDicUnitGradeRepo
+
+    @Autowired
+    ResidentDicAdminDivisionRepository residentDicAdminDivisionRepo
+
+    @Autowired
+    ResidentDicUnitKindRepository residentDicUnitKindRepo
 
     @Override
     TxzhTsBddwml getById(String id) {
@@ -59,7 +58,7 @@ class TxzhTsBddwmlServiceImpl implements TxzhTsBddwmlService {
     @Override
     List<String> getRootIds() {
         List<TxzhTsBddwml> entities = bddwmlRepo.findByParentnmIsNull()
-        return entities.stream().map{bddwml -> bddwml.nm}.collect(toList())
+        return entities.stream().map { bddwml -> bddwml.nm }.collect(toList())
     }
 
     @Override
@@ -76,7 +75,7 @@ class TxzhTsBddwmlServiceImpl implements TxzhTsBddwmlService {
     @Override
     List<BddwmlNode> getManagedTree() {
         List<String> rootIds = rootIdsBean.rootIds
-        return rootIds.stream().map{id -> getManagedTreeById(id)}.collect(toList())
+        return rootIds.stream().map { id -> getManagedTreeById(id) }.collect(toList())
     }
 
     BddwmlNode getManagedTreeById(String id) {
@@ -104,29 +103,14 @@ class TxzhTsBddwmlServiceImpl implements TxzhTsBddwmlService {
         final boolean managedCampExists = zbgcRepo.existsBySjcjdwnm(nm)
         node.hasManagedCamp = managedCampExists
 
-        List<CampApartUseclass> campApartUseclasses = campApartUseclassRepo.findByBarrackUseUnit(nm)
-        boolean usingCampExists = campApartUseclasses.stream().anyMatch{u -> u.barrackUseClass == '1001'}
+        List<ResidentUnit> residentUnits = residentUnitRepo.findByBdnm(nm)
+//        List<CampApartUseclass> campApartUseclasses = campApartUseclassRepo.findByBarrackUseUnit(nm)
+//        boolean usingCampExists = campApartUseclasses.stream().anyMatch { u -> u.barrackUseClass == '1001' }
+        String usingCampId = residentUnits[0]?.usingCampId
+        boolean usingCampExists = !usingCampId?.isEmpty()
         node.hasUsingCamp = usingCampExists
 
-        List<ResidentUnit> residentUnits = residentUnitRepo.findByBdnm(nm)
         node.unitKind = residentUnits[0]?.unitKind
-        node.adminDivision = residentUnits[0]?.adminDivision
-        node.detailAddress = residentUnits[0]?.detailAddress
-        node.unitGrade = residentUnits[0]?.unitGrade
-        node.useingCampId = residentUnits[0]?.useingCampId
-        node.soldierAuthorizedNum = residentUnits[0]?.soldierAuthorizedNum
-        node.soldierRealityNum = residentUnits[0]?.soldierRealityNum
-        node.employeeAuthorizedNum = residentUnits[0]?.employeeAuthorizedNum
-        node.employeeRealityNum = residentUnits[0]?.employeeRealityNum
-        node.officerorAuthorizedNum = residentUnits[0]?.officerorAuthorizedNum
-        node.officerRealityNum = residentUnits[0]?.officerRealityNum
-        node.civilAuthorizedNum = residentUnits[0]?.civilAuthorizedNum
-        node.civilRealityNum = residentUnits[0]?.civilRealityNum
-        node.mission = residentUnits[0]?.mission
-        node.missionEx = residentUnits[0]?.missionEx
-        node.remark = residentUnits[0]?.remark
-        node.sjcjsj = residentUnits[0]?.sjcjsj
-        node.sjcjry = residentUnits[0]?.sjcjry
 
         return node
     }
@@ -135,27 +119,27 @@ class TxzhTsBddwmlServiceImpl implements TxzhTsBddwmlService {
         return bddwmlRepo.findByParentnm(id).
                 stream().
                 parallel().
-                map{entity -> getNodeByEntity(entity)}.
+                map { entity -> getNodeByEntity(entity) }.
                 collect(toList())
     }
 
     void getManagedTree(BddwmlNode node) {
         node.show = node.hasManagedCamp || descendantsHasManagedCamp(node) // 判断管理单位条件
         final List<BddwmlNode> children = node.getChildren()
-        children.sort{e1, e2 -> e1.xh <=> e2.xh} // 按xh排序
+        children.sort { e1, e2 -> e1.xh <=> e2.xh } // 按xh排序
         for (BddwmlNode child : children) {
             this.getManagedTree(child)
         }
     }
 
     private static boolean descendantsHasManagedCamp(BddwmlNode node) {
-        return stream(node).anyMatch{n -> n.hasManagedCamp}
+        return stream(node).anyMatch { n -> n.hasManagedCamp }
     }
 
     @Override
     List<BddwmlNode> getUsingTree(String unitKind) {
         List<String> rootIds = rootIdsBean.rootIds
-        return rootIds.stream().map{id -> getUsingTreeById(id, unitKind)}.collect(toList())
+        return rootIds.stream().map { id -> getUsingTreeById(id, unitKind) }.collect(toList())
     }
 
     BddwmlNode getUsingTreeById(String id, String unitKind) {
@@ -169,37 +153,37 @@ class TxzhTsBddwmlServiceImpl implements TxzhTsBddwmlService {
             node.show = !node.isLeaf || node.unitKind == unitKind // 显示指定unitKind值的叶子节点
         }
         final List<BddwmlNode> children = node.getChildren()
-        children.sort{e1, e2 -> e1.xh <=> e2.xh} // 按xh排序
+        children.sort { e1, e2 -> e1.xh <=> e2.xh } // 按xh排序
         for (BddwmlNode child : children) {
             this.getUsingTree(child, unitKind)
         }
     }
 
     private static boolean descendantsHasUsingCamp(BddwmlNode node) {
-        return stream(node).anyMatch{n -> n.hasUsingCamp}
+        return stream(node).anyMatch { n -> n.hasUsingCamp }
     }
 
     private static Stream<BddwmlNode> stream(BddwmlNode parentNode) {
         if (parentNode.isLeaf) {
             return Stream.of(parentNode)
         } else parentNode.children.stream().
-                map{childNode -> stream(childNode)}.
-                reduce(Stream.of(parentNode), {n1, n2 -> Stream.concat(n1, n2)})
+                map { childNode -> stream(childNode) }.
+                reduce(Stream.of(parentNode), { n1, n2 -> Stream.concat(n1, n2) })
     }
 
     @Override
     boolean isRootUnit(String bdnm) {
         List<String> rootIds = rootIdsBean.rootIds
-        return rootIds.stream().anyMatch{rootId -> rootId == bdnm}
+        return rootIds.stream().anyMatch { rootId -> rootId == bdnm }
     }
 
     @Override
     BddwmlNode getRootUnit(String bdnm) {
+        BddwmlNode rootNode = null
         if (isRootUnit(bdnm)) {
             return bddwmlNodeBean.rootToNodes.get(bdnm)
-        } else {
-            return null
         }
+        return rootNode
     }
 
     @Override

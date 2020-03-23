@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicTraUsingConditionServiceImpl implements CampDicTraUsingConditionService {
 
     @Autowired
-    private CampDicTraUsingConditionRepository repository
+    CampDicTraUsingConditionRepository repository
 
     @Override
     CampDicTraUsingCondition getById(String id) {

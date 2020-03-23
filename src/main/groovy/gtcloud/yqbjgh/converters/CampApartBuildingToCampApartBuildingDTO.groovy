@@ -18,26 +18,29 @@ import org.springframework.stereotype.Component
 class CampApartBuildingToCampApartBuildingDTO implements Converter<CampApartBuilding, CampApartBuildingDTO> {
 
     @Autowired
-    private CampDicBuildingStructureRepository campDicBuildingStructureRepository
+    CampDicBuildingStructureRepository campDicBuildingStructureRepository
 
     @Autowired
-    private CampDicQualityGradeRepository campDicQualityGradeRepository
+    CampDicQualityGradeRepository campDicQualityGradeRepository
 
     @Autowired
-    private CampDicUsingStatusRepository campDicUsingStatusRepository
+    CampDicUsingStatusRepository campDicUsingStatusRepository
 
     @Autowired
-    private CampApartCoordinateRepository apartCoordinateRepository
+    CampApartCoordinateRepository apartCoordinateRepository
 
     @Override
-	CampApartBuildingDTO convert(CampApartBuilding source) {
+    CampApartBuildingDTO convert(CampApartBuilding source) {
         CampApartBuildingDTO target = new CampApartBuildingDTO()
         target.apartName = source.apartName
         target.apartNum = source.apartNum
-        Optional<CampDicBuildingStructure> optionalCampDicBuildingStructure =
-                campDicBuildingStructureRepository.findById(source.buildingStructure)
-        optionalCampDicBuildingStructure.ifPresent {campDicBuildingStructure ->
-                target.buildingStructure = campDicBuildingStructure.mc}
+
+        // buildingStructure -> buildingStructureÃû³Æ
+        String buildingStructure = source.buildingStructure
+        Optional<CampDicBuildingStructure> optBuildingStructure =
+                campDicBuildingStructureRepository.findById(buildingStructure ?: "")
+        optBuildingStructure.ifPresent { dic -> target.buildingStructure = dic.mc }
+
         target.campId = source.campId
         target.elevatorNum = source.elevatorNum
         target.floorArea = source.floorArea
@@ -45,23 +48,30 @@ class CampApartBuildingToCampApartBuildingDTO implements Converter<CampApartBuil
         target.floorlevelUp = source.floorlevelUp
         target.floorYear = source.floorYear
         target.jlbm = source.jlbm
-        Optional<CampDicQualityGrade> optionalCampDicQualityGrade =
-                campDicQualityGradeRepository.findById(source.qualityGrade)
-        optionalCampDicQualityGrade.ifPresent{campDicQualityGrade ->
-                target.qualityGrade = campDicQualityGrade.mc}
+
+        // qualityGrade -> qualityGradeÃû³Æ
+        String qualityGrade = source.qualityGrade
+        Optional<CampDicQualityGrade> optQualityGrade =
+                campDicQualityGradeRepository.findById(qualityGrade ?: "")
+        optQualityGrade.ifPresent { dic -> target.qualityGrade = dic.mc }
+
         target.sjcjry = source.sjcjry
         target.sjcjsj = source.sjcjsj
-        Optional<CampDicUsingStatus> optionalCampDicUsingStatus =
-                campDicUsingStatusRepository.findById(source.usingStatus)
-        optionalCampDicUsingStatus.ifPresent{campDicUsingStatus ->
-                target.usingStatus = campDicUsingStatus.mc}
+
+        // usingStatus -> usingStatusÃû³Æ
+        String usingStatus = source.usingStatus
+        Optional<CampDicUsingStatus> optUsingStatus =
+                campDicUsingStatusRepository.findById(usingStatus ?: "")
+        optUsingStatus.ifPresent { dic -> target.usingStatus = dic.mc }
+
         List<CampApartCoordinate> campApartCoordinates =
                 apartCoordinateRepository.findByApartId(source.jlbm)
         for (CampApartCoordinate campApartCoordinate : campApartCoordinates) {
-            target.coordinateId = campApartCoordinate.jlbm // coordinateId(CAMP_APARIT_BUILDING) -> jlbm(CAMP_APART_COORIDINATE)
+            // coordinateId(CAMP_APARIT_BUILDING) -> jlbm(CAMP_APART_COORIDINATE)
             target.coorX = campApartCoordinate.coorX
+            target.coordinateId = campApartCoordinate.jlbm
             target.coorY = campApartCoordinate.coorY
         }
-		return target
-	}
+        return target
+    }
 }

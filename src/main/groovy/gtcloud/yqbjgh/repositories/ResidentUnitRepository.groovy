@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ResidentUnitRepository extends JpaRepository<ResidentUnit, String> {
 
-	List<ResidentUnit> findByBdnm(String bdnm)
+    List<ResidentUnit> findByBdnm(String bdnm)
 
-    List<ResidentUnit> findByUseingCampId(String campId)
+    List<ResidentUnit> findByUsingCampId(String campId)
 
 }

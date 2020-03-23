@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CampTrainingFieldRepository extends JpaRepository<CampTrainingField, String> {
 
-	List<CampTrainingField> findByCampId(String campId)
+    List<CampTrainingField> findByCampId(String campId)
 
 }

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class TxzyTsZbgcController {
 
-	@Autowired
-    private TxzyTsZbgcService service
+    @Autowired
+    TxzyTsZbgcService service
 
-	@GetMapping(value = "/txzy-ts-zbgc/{sjcjdwnm}")
-	List<TxzyTsZbgc> getCampTxzyTsZbgcBySjcjdwnm(@PathVariable String sjcjdwnm) {
-		return service.getBySjcjdwnm(sjcjdwnm)
-	}
+    @GetMapping(value = "/txzy-ts-zbgc/{sjcjdwnm}")
+    List<TxzyTsZbgc> getCampTxzyTsZbgcBySjcjdwnm(@PathVariable String sjcjdwnm) {
+        return service.getBySjcjdwnm(sjcjdwnm)
+    }
 }

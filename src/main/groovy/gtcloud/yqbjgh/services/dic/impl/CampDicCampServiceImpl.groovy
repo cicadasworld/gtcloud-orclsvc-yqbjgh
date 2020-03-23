@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicCampServiceImpl implements CampDicCampService {
 
     @Autowired
-    private CampDicCampRepository repository
+    CampDicCampRepository repository
 
     @Override
     CampDicCamp getById(String id) {

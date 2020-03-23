@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ResidentUnitController {
 
-	@Autowired
-    private ResidentUnitService service
+    @Autowired
+    ResidentUnitService service
 
-	@GetMapping(value = "/resident-unit/bdnm/{bdnm}")
-	List<ResidentUnitDTO> getResidentUnit(@PathVariable String bdnm) {
+    @GetMapping(value = "/resident-unit/bdnm/{bdnm}")
+    List<ResidentUnitDTO> getResidentUnit(@PathVariable String bdnm) {
         return service.getResidentUnit(bdnm)
-	}
+    }
 
     @GetMapping(value = "/resident-unit/campid/{campId}")
     List<ResidentUnitDTO> getResidentUnitByCampId(@PathVariable String campId) {

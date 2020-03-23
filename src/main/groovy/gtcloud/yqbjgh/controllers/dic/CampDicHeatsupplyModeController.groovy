@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController
 class CampDicHeatsupplyModeController {
 
     @Autowired
-    private CampDicHeatsupplyModeService service
+    CampDicHeatsupplyModeService service
 
-	@GetMapping(value = "/camp-dic-heatsupply-mode")
-	List<CampDicHeatsupplyMode> getCampDicHeatsupplyModeList() {
+    @GetMapping(value = "/camp-dic-heatsupply-mode")
+    List<CampDicHeatsupplyMode> getCampDicHeatsupplyModeList() {
         return service.listAll()
-	}
+    }
 }

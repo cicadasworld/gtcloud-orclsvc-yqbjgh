@@ -13,35 +13,39 @@ import org.springframework.stereotype.Component
 @Component
 class CampWarehouseToCampWarehouseDTO implements Converter<CampWarehouse, CampWarehouseDTO> {
 
-	@Autowired
-    private CampDicWarKindRepository campDicWarKindRepository
+    @Autowired
+    CampDicWarKindRepository campDicWarKindRepository
 
     @Autowired
-    private TxzhTsBddwmlRepository txzhTsBddwmlRepository
+    TxzhTsBddwmlRepository txzhTsBddwmlRepository
 
-	@Override
-	CampWarehouseDTO convert(CampWarehouse source) {
-		CampWarehouseDTO target = new CampWarehouseDTO()
-		target.jlbm = source.jlbm
-		target.apartId = source.apartId
+    @Override
+    CampWarehouseDTO convert(CampWarehouse source) {
+        CampWarehouseDTO target = new CampWarehouseDTO()
+        target.jlbm = source.jlbm
+        target.apartId = source.apartId
 
-        Optional<CampDicWarKind> optionalCampDicWarKind =
-                campDicWarKindRepository.findById(source.warKind)
-        optionalCampDicWarKind.ifPresent{campDicWarKind ->
-                target.warKind = campDicWarKind.mc}
+        // warKind -> warKindÃû³Æ
+        String warKind = source.warKind
+        Optional<CampDicWarKind> optWarKind =
+                campDicWarKindRepository.findById(warKind ?: "")
+        optWarKind.ifPresent { dic -> target.warKind = dic.mc }
 
-		target.warName = source.warName
-		target.campId = source.campId
+        target.warName = source.warName
+        target.campId = source.campId
 
-        Optional<TxzhTsBddwml> optionalTxzhtsBddwml =
-                txzhTsBddwmlRepository.findById(source.managementUnit)
-        optionalTxzhtsBddwml.ifPresent{txzhTsBddwml ->
-                target.managementUnit = txzhTsBddwml.mc}
+        // managementUnit -> bdÃû³Æ
+        String managementUnit = source.managementUnit
+        Optional<TxzhTsBddwml> optTxzhtsBddwml =
+                txzhTsBddwmlRepository.findById(managementUnit ?: "")
+        optTxzhtsBddwml.ifPresent { txzhTsBddwml ->
+            target.managementUnit = txzhTsBddwml.mc
+        }
 
-		target.sjcjry = source.sjcjry
-		target.sjcjsj = source.sjcjsj
+        target.sjcjry = source.sjcjry
+        target.sjcjsj = source.sjcjsj
 
-		return target
-	}
+        return target
+    }
 
 }

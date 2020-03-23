@@ -8,4 +8,6 @@ interface CampApartUseclassService {
     CampApartUseclass getById(String id)
 
     List<CampApartUseclassDTO> getCampApartUseClass(String apartId)
+
+    Map<String, Double> getAreaStatistics(String campId)
 }

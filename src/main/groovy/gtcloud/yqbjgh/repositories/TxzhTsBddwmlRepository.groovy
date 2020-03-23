@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param
 interface TxzhTsBddwmlRepository extends JpaRepository<TxzhTsBddwml, String> {
 
     @Query("select t from TxzhTsBddwml t where t.parentnm = :id")
-	List<TxzhTsBddwml> findByParentnm(@Param("id") String id)
+    List<TxzhTsBddwml> findByParentnm(@Param("id") String id)
 
     //@Query("select t from TxzhTsBddwml t where t.parentnm is null")
     List<TxzhTsBddwml> findByParentnmIsNull()

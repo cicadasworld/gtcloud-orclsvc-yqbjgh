@@ -15,40 +15,48 @@ import org.springframework.stereotype.Component
 @Component
 class CampApartUseclassToCampApartUseclassDTO implements Converter<CampApartUseclass, CampApartUseclassDTO> {
 
-	@Autowired
-	private CampApartBuildingRepository campApartBuildingRepository
+    @Autowired
+    CampApartBuildingRepository campApartBuildingRepository
 
     @Autowired
-    private CampDicBarrackUseClassRepository campDicBarrackUseClassRepository
+    CampDicBarrackUseClassRepository campDicBarrackUseClassRepository
 
     @Autowired
-    private TxzhTsBddwmlRepository txzhTsBddwmlRepository
+    TxzhTsBddwmlRepository txzhTsBddwmlRepository
 
-	@Override
-	CampApartUseclassDTO convert(CampApartUseclass source) {
-		CampApartUseclassDTO target = new CampApartUseclassDTO()
-		target.apartId = source.apartId
-		target.barrackUseArea = source.barrackUseArea
+    @Override
+    CampApartUseclassDTO convert(CampApartUseclass source) {
+        CampApartUseclassDTO target = new CampApartUseclassDTO()
+        target.apartId = source.apartId
+        target.barrackUseArea = source.barrackUseArea
 
-        Optional<CampDicBarrackUseClass> optionalCampDicBarrackUseClass =
-                campDicBarrackUseClassRepository.findById(source.barrackUseClass)
-        optionalCampDicBarrackUseClass.ifPresent{campDicBarrackUseClass ->
-                    target.barrackUseClass = campDicBarrackUseClass.mc}
+        // barrackUseClass -> barrackUseClassÃû³Æ
+        String barrackUseClass = source.barrackUseClass
+        Optional<CampDicBarrackUseClass> optBarrackUseClass =
+                campDicBarrackUseClassRepository.findById(barrackUseClass ?: "")
+        optBarrackUseClass.ifPresent { dic -> target.barrackUseClass = dic.mc }
 
-        Optional<TxzhTsBddwml> optionalTxzhTsBddwml =
-                txzhTsBddwmlRepository.findById(source.barrackUseUnit)
-        optionalTxzhTsBddwml.ifPresent{txzhTsBddwml ->
-                target.barrackUseUnit = txzhTsBddwml.mc}  // barrackUseUnit -> bdnm
+        // barrackUseUnit -> bdÃû³Æ
+        String barrackUseUnit = source.barrackUseUnit
+        Optional<TxzhTsBddwml> optTxzhTsBddwml =
+                txzhTsBddwmlRepository.findById(barrackUseUnit ?: "")
+        optTxzhTsBddwml.ifPresent { txzhTsBddwml ->
+            target.barrackUseUnit = txzhTsBddwml.mc
+        }
 
-		target.jlbm = source.jlbm
-		target.sjcjry = source.sjcjry
-		target.sjcjsj = source.sjcjsj
+        target.jlbm = source.jlbm
+        target.sjcjry = source.sjcjry
+        target.sjcjsj = source.sjcjsj
 
-        Optional<CampApartBuilding> optionalCampApartBuilding =
-                campApartBuildingRepository.findById(source.apartId)
-        optionalCampApartBuilding.ifPresent{campApartBuilding ->
-                    target.apartName = campApartBuilding.apartName}
-		return target
-	}
+        // apartId -> apartName
+        String apartId = source.apartId
+        Optional<CampApartBuilding> optCampApartBuilding =
+                campApartBuildingRepository.findById(apartId ?: "")
+        optCampApartBuilding.ifPresent { campApartBuilding ->
+            target.apartName = campApartBuilding.apartName
+        }
+
+        return target
+    }
 
 }

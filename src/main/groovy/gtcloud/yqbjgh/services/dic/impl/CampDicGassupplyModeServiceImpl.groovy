@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicGassupplyModeServiceImpl implements CampDicGassupplyModeService {
 
     @Autowired
-    private CampDicGassupplyModeRepository repository
+    CampDicGassupplyModeRepository repository
 
     @Override
     CampDicGassupplyMode getById(String id) {

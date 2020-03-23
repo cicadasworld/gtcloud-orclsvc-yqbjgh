@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*
 class CampLocationController {
 
     @Autowired
-    private VCampLocationService vCampLocationService
+    VCampLocationService vCampLocationService
 
     @Autowired
-    private VUseCampLocationService vUseCampLocationService
+    VUseCampLocationService vUseCampLocationService
 
     @GetMapping(value = "/v-camp-location/managed-camp/{bdnm}")
     RestResult<VCampLocationDTO> getVCampLocationForManagedCampByBdnm(@PathVariable String bdnm) {
@@ -39,33 +39,14 @@ class CampLocationController {
         return restResult
     }
 
-    @GetMapping(value = "/v-camp-location/spatialquery")
-    RestResult<VCampLocationDTO> queryCampLocationByRect(
-            @RequestParam String left,
-            @RequestParam String bottom,
-            @RequestParam String right,
-            @RequestParam String top) {
-        final Double leftBound = Double.valueOf(left)
-        final Double bottomBound = Double.valueOf(bottom)
-        final Double rightBound = Double.valueOf(right)
-        final Double topBound = Double.valueOf(top)
-
-        RestResult<VCampLocationDTO> restResult = new RestResult<>()
-        List<VCampLocationDTO> results = vCampLocationService.queryCampLocationByRect(leftBound, bottomBound, rightBound, topBound)
-        final String endpoint =
-                String.format("/v-camp-location/spatialquery?left=%s&bottom=%s&right=%s&top=%s", left, bottom, right, top)
-        restResult.setEndpoint(endpoint)
-        restResult.setCampLocations(results)
-        return restResult
-    }
-
     @GetMapping(value = "/v-camp-location/dknm/{dknm}")
     VCampLocation getVCampLocationByDknm(@PathVariable String dknm) {
         return vCampLocationService.getByDknm(dknm)
     }
 
     @PostMapping(value = "/v-camp-location/customquery")
-    RestResult<VCampLocationDTO> queryVCampLocationByCustomFields(@RequestBody CustomFields customFields) {
+    RestResult<VCampLocationDTO> queryVCampLocationByCustomFields(
+            @RequestBody CustomFields customFields) {
         RestResult<VCampLocationDTO> restResult = new RestResult<>()
         List<VCampLocationDTO> results = vCampLocationService.queryVCampLocationByCustomFields(customFields)
         final String endpoint = "/v-camp-location/customquery"

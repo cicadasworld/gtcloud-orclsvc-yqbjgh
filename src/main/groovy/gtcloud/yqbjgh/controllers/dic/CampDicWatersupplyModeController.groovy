@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController
 class CampDicWatersupplyModeController {
 
     @Autowired
-    private CampDicWatersupplyModeService service
+    CampDicWatersupplyModeService service
 
-	@GetMapping(value = "/camp-dic-watersupply-mode")
-	List<CampDicWatersupplyMode> getCampDicWatersupplyModeList() {
+    @GetMapping(value = "/camp-dic-watersupply-mode")
+    List<CampDicWatersupplyMode> getCampDicWatersupplyModeList() {
         return service.listAll()
-	}
+    }
 }

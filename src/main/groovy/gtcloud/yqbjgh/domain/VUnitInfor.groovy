@@ -31,7 +31,7 @@ class VUnitInfor {
 
     String unitGrade
 
-    String useingCampId
+    String usingCampId
 
     Integer soldierAuthorizedNum
 
@@ -59,4 +59,6 @@ class VUnitInfor {
     Date sjcjsj
 
     String sjcjry
+
+    String usingApartNum
 }

@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class TxzhTsBddwmlController {
 
-	@Autowired
-    private TxzhTsBddwmlService bddwmlSvc
+    @Autowired
+    TxzhTsBddwmlService bddwmlSvc
 
-	@GetMapping(value = "/bddwml/{nm}")
-	TxzhTsBddwml getTxzhTsBddwml(@PathVariable String nm) {
-		TxzhTsBddwml result = bddwmlSvc.getById(nm)
-		return result
-	}
+    @GetMapping(value = "/bddwml/{nm}")
+    TxzhTsBddwml getTxzhTsBddwml(@PathVariable String nm) {
+        TxzhTsBddwml result = bddwmlSvc.getById(nm)
+        return result
+    }
 
     @GetMapping(value = "/bddwml-zbgc/catalogue")
     List<BddwmlNode> getRootWithZbgc() {
@@ -27,7 +27,8 @@ class TxzhTsBddwmlController {
     }
 
     @GetMapping(value = "/bddwml-resident-unit/catalogue")
-    List<BddwmlNode> getRootWithCampApartUseclass(@RequestParam(defaultValue = "") String unitKind) {
+    List<BddwmlNode> getRootWithCampApartUseclass(
+            @RequestParam(defaultValue = "") String unitKind) {
         return bddwmlSvc.getUsingTree(unitKind)
     }
 }

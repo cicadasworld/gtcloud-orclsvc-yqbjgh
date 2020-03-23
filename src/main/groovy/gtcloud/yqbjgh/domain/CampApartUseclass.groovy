@@ -8,20 +8,20 @@ import javax.persistence.Id
 @Entity
 class CampApartUseclass {
 
-	@Id
-	String jlbm
+    @Id
+    String jlbm
 
-	String apartId
+    String apartId
 
-	String barrackUseClass
+    String barrackUseClass
 
-	Float barrackUseArea
+    Float barrackUseArea
 
-	String barrackUseUnit
+    String barrackUseUnit
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	Date sjcjsj
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    Date sjcjsj
 
-	String sjcjry
+    String sjcjry
 
 }

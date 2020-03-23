@@ -24,7 +24,7 @@ class VUnitInforDTO {
 
     String unitGrade
 
-    String useingCampId
+    String usingCampId
 
     Integer soldierAuthorizedNum
 
@@ -68,4 +68,6 @@ class VUnitInforDTO {
     Integer totalCivilAuthorizedNum
 
     Integer totalCivilRealityNum
+
+    String usingApartNum
 }

@@ -11,25 +11,25 @@ import org.springframework.stereotype.Service
 class UserLoginServiceImpl implements UserLoginService {
 
     @Autowired
-    private Bdf2UserRepository repository
+    Bdf2UserRepository repository
 
     @Override
     String[] login(String username, String password) {
         final Bdf2User entity = repository.findByUsername(username)
         if (entity == null) {
-            return ["false", "输入的参数无效"]
+            return ["false", "\u8f93\u5165\u7684\u53c2\u6570\u65e0\u6548"]
         }
         final String encPass = entity.getPassword()
         final String salt = entity.getSalt()
         ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder()
         boolean valid = passwordEncoder.isPasswordValid(encPass, password, salt)
         if (username == null || password == null) {
-            return ["false", "输入的参数无效"]
+            return ["false", "\u8f93\u5165\u7684\u53c2\u6570\u65e0\u6548"]
         }
         if (valid) {
-            return ["true", "登录成功!"]
+            return ["true", "\u767b\u5f55\u6210\u529f!"]
         } else {
-            return ["false", "用户名或密码错误"]
+            return ["false", "\u7528\u6237\u540d\u6216\u5bc6\u7801\u9519\u8bef"]
         }
     }
 }

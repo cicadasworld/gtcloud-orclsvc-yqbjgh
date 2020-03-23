@@ -13,35 +13,37 @@ import org.springframework.stereotype.Component
 @Component
 class CampBatgroundFacilitiesToCampBatgroundFacilitiesDTO implements Converter<CampBatgroundFacilities, CampBatgroundFacilitiesDTO> {
 
-	@Autowired
-    private CampDicBatKindRepository campDicBatKindRepository
+    @Autowired
+    CampDicBatKindRepository campDicBatKindRepository
 
-	@Autowired
-    private TxzhTsBddwmlRepository txzhTsBddwmlRepository
+    @Autowired
+    TxzhTsBddwmlRepository txzhTsBddwmlRepository
 
-	@Override
-	CampBatgroundFacilitiesDTO convert(CampBatgroundFacilities source) {
+    @Override
+    CampBatgroundFacilitiesDTO convert(CampBatgroundFacilities source) {
         CampBatgroundFacilitiesDTO target = new CampBatgroundFacilitiesDTO()
         target.batArea = source.batArea
         target.batFunction = source.batFunction
 
-        Optional<CampDicBatKind> optionalCampDicBatKind =
-                campDicBatKindRepository.findById(source.batKind)
-        optionalCampDicBatKind.ifPresent{campDicBatKind ->
-                target.batKind = campDicBatKind.mc}
+        // batKind -> batKindÃû³Æ
+        String batKind = source.batKind
+        Optional<CampDicBatKind> optCampDicBatKind = campDicBatKindRepository.findById(batKind ?: "")
+        optCampDicBatKind.ifPresent { dic -> target.batKind = dic.mc }
 
         target.batName = source.batName
         target.campId = source.campId
         target.jlbm = source.jlbm
 
-        Optional<TxzhTsBddwml> optionalTxzhTsBddwml =
-                txzhTsBddwmlRepository.findById(source.managementUnit)
-        optionalTxzhTsBddwml.ifPresent{txzhTsBddwml ->
-                target.managementUnit = txzhTsBddwml.mc}
+        // managementUnit -> bdÃû³Æ
+        String managementUnit = source.managementUnit
+        Optional<TxzhTsBddwml> optTxzhTsBddwml = txzhTsBddwmlRepository.findById(managementUnit ?: "")
+        optTxzhTsBddwml.ifPresent { txzhTsBddwml ->
+            target.managementUnit = txzhTsBddwml.mc
+        }
 
         target.sjcjry = source.sjcjry
         target.sjcjsj = source.sjcjsj
-		return target
-	}
+        return target
+    }
 
 }

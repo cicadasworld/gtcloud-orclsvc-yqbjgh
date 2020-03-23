@@ -52,4 +52,6 @@ class VUseCampLocationDTO {
 
     String useBdmc
 
+    String realorvirtual
+
 }

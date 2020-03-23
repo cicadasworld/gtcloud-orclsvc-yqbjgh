@@ -8,24 +8,24 @@ import javax.persistence.Id
 @Entity
 class CampTrainingField {
 
-	@Id
-	String jlbm
+    @Id
+    String jlbm
 
-	String campId
+    String campId
 
-	String traName
+    String traName
 
-	String traKind
+    String traKind
 
-	Float traArea
+    Float traArea
 
-	String traUsingCondition
+    String traUsingCondition
 
-	String managementUnit
+    String managementUnit
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	Date sjcjsj
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    Date sjcjsj
 
-	String sjcjry
+    String sjcjry
 
 }

@@ -17,28 +17,29 @@ import org.springframework.stereotype.Component
 @Component
 class ResidentUnitToResidentUnitDTO implements Converter<ResidentUnit, ResidentUnitDTO> {
 
-	@Autowired
-	private TxzhTsBddwmlRepository bddwmlRepository
+    @Autowired
+    TxzhTsBddwmlRepository bddwmlRepository
 
     @Autowired
-    private ResidentDicUnitGradeRepository residentDicUnitGradeRepository
+    ResidentDicUnitGradeRepository residentDicUnitGradeRepository
 
     @Autowired
-    private ResidentDicAdminDivisionRepository residentDicAdminDivisionRepository
+    ResidentDicAdminDivisionRepository residentDicAdminDivisionRepository
 
     @Autowired
-    private ResidentDicUnitKindRepository residentDicUnitKindRepository
+    ResidentDicUnitKindRepository residentDicUnitKindRepository
 
     @Override
     ResidentUnitDTO convert(ResidentUnit source) {
         ResidentUnitDTO target = new ResidentUnitDTO()
-        target.bdnm = source.bdnm
+        String bdnm = source.bdnm
+        target.bdnm = bdnm
         target.detailAddress = source.detailAddress
         target.jlbm = source.jlbm
         target.mission = source.mission
         target.sjcjry = source.sjcjry
         target.sjcjsj = source.sjcjsj
-        target.useingCampId = source.useingCampId
+        target.usingCampId = source.usingCampId
         target.officerRealityNum = source.officerRealityNum
         target.soldierRealityNum = source.soldierRealityNum
         target.soldierAuthorizedNum = source.soldierAuthorizedNum
@@ -49,25 +50,32 @@ class ResidentUnitToResidentUnitDTO implements Converter<ResidentUnit, ResidentU
         target.officerorAuthorizedNum = source.officerorAuthorizedNum
         target.missionEx = source.missionEx
         target.remark = source.remark
+        target.usingApartNum = source.usingApartNum
 
-        Optional<TxzhTsBddwml> optionalBddwml = bddwmlRepository.findById(source.bdnm)
-        optionalBddwml.ifPresent{txzhTsBddwml ->
-                target.mc = txzhTsBddwml.mc}
+        // bdnm -> bd名称
+        Optional<TxzhTsBddwml> optionalBddwml = bddwmlRepository.findById(bdnm ?: "")
+        optionalBddwml.ifPresent { txzhTsBddwml ->
+            target.mc = txzhTsBddwml.mc
+        }
 
-        Optional<ResidentDicUnitGrade> optionalResidentDicUnitGrade =
-                residentDicUnitGradeRepository.findById(source.unitGrade)
-        optionalResidentDicUnitGrade.ifPresent{residentDicUnitGrade ->
-                target.unitGrade = residentDicUnitGrade.mc}
+        // unitGrade -> unitGrade名称
+        String unitGrade = source.unitGrade
+        Optional<ResidentDicUnitGrade> optUnitGrade =
+                residentDicUnitGradeRepository.findById(unitGrade ?: "")
+        optUnitGrade.ifPresent { dic ->
+            target.unitGrade = dic.mc
+        }
 
-        Optional<ResidentDicAdminDivision> optionalResidentDicAdminDivision =
-                residentDicAdminDivisionRepository.findById(source.adminDivision)
-        optionalResidentDicAdminDivision.ifPresent{residentDicAdminDivision ->
-                target.adminDivision = residentDicAdminDivision.mc}
+        // adminDivision -> adminDivision名称
+        String adminDivision = source.adminDivision
+        Optional<ResidentDicAdminDivision> optAdminDivision =
+                residentDicAdminDivisionRepository.findById(adminDivision ?: "")
+        optAdminDivision.ifPresent { dic -> target.adminDivision = dic.mc }
 
-        Optional<ResidentDicUnitKind> optionalResidentDicUnitKind =
-                residentDicUnitKindRepository.findById(source.unitKind)
-        optionalResidentDicUnitKind.ifPresent{residentDicUnitKind ->
-                target.unitKind = residentDicUnitKind.mc}
+        // unitKind -> unitKind名称
+        String unitKind = source.unitKind
+        Optional<ResidentDicUnitKind> optUnitKind = residentDicUnitKindRepository.findById(unitKind ?: "")
+        optUnitKind.ifPresent { dic -> target.unitKind = dic.mc }
 
         return target
     }

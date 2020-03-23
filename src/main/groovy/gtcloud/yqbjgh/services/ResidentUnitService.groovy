@@ -7,8 +7,6 @@ interface ResidentUnitService {
 
     List<ResidentUnit> getByBdnm(String bdnm)
 
-    List<ResidentUnit> getByUseingCampId(String campId)
-
     List<ResidentUnitDTO> getResidentUnit(String bdnm)
 
     List<ResidentUnitDTO> getResidentUnitByCampId(String campId)

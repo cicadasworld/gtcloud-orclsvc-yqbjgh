@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicBuildingStructureServiceImpl implements CampDicBuildingStructureService {
 
     @Autowired
-    private CampDicBuildingStructureRepository repository
+    CampDicBuildingStructureRepository repository
 
     @Override
     CampDicBuildingStructure getById(String id) {

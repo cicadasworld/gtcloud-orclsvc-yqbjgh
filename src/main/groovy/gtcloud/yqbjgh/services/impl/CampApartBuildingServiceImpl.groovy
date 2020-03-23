@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.toList
 class CampApartBuildingServiceImpl implements CampApartBuildingService {
 
     @Autowired
-    private CampApartBuildingRepository campApartBuildingRepository
+    CampApartBuildingRepository campApartBuildingRepository
 
     @Autowired
     private CampApartBuildingToCampApartBuildingDTO converter
@@ -32,8 +32,8 @@ class CampApartBuildingServiceImpl implements CampApartBuildingService {
     @Override
     List<CampApartBuildingDTO> getCampApartBuildingByCampId(String campId) {
         List<CampApartBuilding> campApartBuildings = campApartBuildingRepository.findByCampId(campId)
-        return campApartBuildings.stream()
-                .map{campApartBuilding -> converter.convert(campApartBuilding)}
-                .collect(toList())
+        return campApartBuildings.stream().
+                map { campApartBuilding -> converter.convert(campApartBuilding) }.
+                collect(toList())
     }
 }

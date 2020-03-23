@@ -6,11 +6,11 @@ import javax.persistence.Id
 @Entity
 class CampDicDangerousAttr {
 
-	@Id
-	String nm
+    @Id
+    String nm
 
-	String xh
+    String xh
 
-	String mc
+    String mc
 
 }

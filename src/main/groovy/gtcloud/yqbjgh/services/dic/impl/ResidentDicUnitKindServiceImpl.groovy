@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class ResidentDicUnitKindServiceImpl implements ResidentDicUnitKindService {
 
     @Autowired
-    private ResidentDicUnitKindRepository repository
+    ResidentDicUnitKindRepository repository
 
     @Override
     ResidentDicUnitKind getById(String id) {

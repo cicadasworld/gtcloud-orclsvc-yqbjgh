@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class ResidentDicUnitGradeServiceImpl implements ResidentDicUnitGradeService {
 
     @Autowired
-    private ResidentDicUnitGradeRepository repository
+    ResidentDicUnitGradeRepository repository
 
     @Override
     ResidentDicUnitGrade getById(String id) {

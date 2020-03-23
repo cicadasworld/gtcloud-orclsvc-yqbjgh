@@ -9,26 +9,26 @@ import javax.persistence.Id
 @Entity
 class CampApartCoordinate {
 
-	@Id
-	String jlbm
+    @Id
+    String jlbm
 
-	String apartId
+    String apartId
 
-	Integer coordinateNum
+    Integer coordinateNum
 
-	@Column(name = "COOR_X")
-	String coorX
+    @Column(name = "COOR_X")
+    String coorX
 
-	@Column(name = "COOR_Y")
-	String coorY
+    @Column(name = "COOR_Y")
+    String coorY
 
-	String coorLength
+    String coorLength
 
-	String coorHeigh
+    String coorHeigh
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	Date sjcjsj
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    Date sjcjsj
 
-	String sjcjry
+    String sjcjry
 
 }

@@ -40,7 +40,7 @@ class PredicateBuilder<T> {
     }
 
     Specification<T> build() {
-        return {root, query, cb ->
+        return { root, query, cb ->
             buildPredicate(root, query, cb)
         }
     }

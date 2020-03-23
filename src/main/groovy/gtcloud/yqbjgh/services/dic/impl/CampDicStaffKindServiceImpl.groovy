@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicStaffKindServiceImpl implements CampDicStaffKindService {
 
     @Autowired
-    private CampDicStaffKindRepository repository
+    CampDicStaffKindRepository repository
 
     @Override
     CampDicStaffKind getById(String id) {

@@ -11,10 +11,15 @@ import org.springframework.web.bind.annotation.RestController
 class CampApartUseclassController {
 
     @Autowired
-    private CampApartUseclassService service
+    CampApartUseclassService service
 
     @GetMapping(value = "/camp-apart-useclass/{apartId}")
     List<CampApartUseclassDTO> getCampApartUseclass(@PathVariable String apartId) {
         return service.getCampApartUseClass(apartId)
+    }
+
+    @GetMapping(value = "/camp-apart-useclass/area-statistics/{campId}")
+    Map<String, Double> getAreaStatistics(@PathVariable String campId) {
+        return service.getAreaStatistics(campId)
     }
 }

@@ -5,7 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CampApartUseclassRepository extends JpaRepository<CampApartUseclass, String> {
 
-	List<CampApartUseclass> findByApartId(String apartId)
-
-    List<CampApartUseclass> findByBarrackUseUnit(String bdnm)
+    List<CampApartUseclass> findByApartId(String apartId)
 }

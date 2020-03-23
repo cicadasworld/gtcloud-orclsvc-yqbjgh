@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class ResidentDicAdminDivisionServiceImpl implements ResidentDicAdminDivisionService {
 
     @Autowired
-    private ResidentDicAdminDivisionRepository repository
+    ResidentDicAdminDivisionRepository repository
 
     @Override
     ResidentDicAdminDivision getById(String id) {

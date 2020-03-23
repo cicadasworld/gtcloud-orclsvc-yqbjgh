@@ -27,49 +27,45 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank
 class VCampLocationServiceImpl implements VCampLocationService {
 
     @Autowired
-    private VCampLocationRepository vCampLocationRepository
+    VCampLocationRepository vCampLocationRepository
 
     @Autowired
-    private CampCoordinateRepository campCoordinateRepository
+    CampCoordinateRepository campCoordinateRepository
 
     @Autowired
-    private TxzhTsBddwmlService bddwmlService
+    TxzhTsBddwmlService bddwmlService
 
     @Autowired
-    private VCampLocationToVCampLocationDTO converter
+    VCampLocationToVCampLocationDTO converter
 
     @Autowired
-    private GeometryFactory geometryFactory
+    GeometryFactory geometryFactory
 
     @Override
     List<VCampLocationDTO> queryVCampLocationByCustomFields(CustomFields customFields) {
         Float maxCampArea = vCampLocationRepository.findMaxCampArea()
-        String dknm = Optional.ofNullable(customFields.getDknm()).orElse("")
-        String dkmc = Optional.ofNullable(customFields.getDkmc()).orElse("")
-        String campWord = Optional.ofNullable(customFields.getCampWord()).orElse("")
-        String campCode = Optional.ofNullable(customFields.getCampCode()).orElse("")
-        String detailAddress = Optional.ofNullable(customFields.getDetailAddress()).orElse("")
-        String campKind = Optional.ofNullable(customFields.getCampKind()).orElse("")
-        String adminDivision = Optional.ofNullable(customFields.getAdminDivision()).orElse("")
-        String siteKind = Optional.ofNullable(customFields.getSiteKind()).orElse("")
-        String watersupplyMode = Optional.ofNullable(customFields.getWatersupplyMode()).orElse("")
-        String elecsupplyMode = Optional.ofNullable(customFields.getElecsupplyMode()).orElse("")
-        String gassupplyMode = Optional.ofNullable(customFields.getGassupplyMode()).orElse("")
-        String heatsupplyMode = Optional.ofNullable(customFields.getHeatsupplyMode()).orElse("")
-        String campAreaFrom = Optional.ofNullable(customFields.getCampAreaFrom()).orElse("0")
-        String campAreaTo = Optional.ofNullable(customFields.getCampAreaTo()).orElse(String.valueOf(maxCampArea))
-        Float from = null
-        Float to = null
-        boolean campAreaBlankCheck = isNotBlank(campAreaFrom) && isNotBlank(campAreaTo)
-        if (campAreaBlankCheck) {
-            from = Float.valueOf(campAreaFrom)
-            to = Float.valueOf(campAreaTo)
-        }
+        String dknm = customFields.getDknm() ?: ""
+        String dkmc = customFields.getDkmc() ?: ""
+        String campWord = customFields.getCampWord() ?: ""
+        String campCode = customFields.getCampCode() ?: ""
+        String detailAddress = customFields.getDetailAddress() ?: ""
+        String campKind = customFields.getCampKind() ?: ""
+        String adminDivision = customFields.getAdminDivision() ?: ""
+        String siteKind = customFields.getSiteKind() ?: ""
+        String watersupplyMode = customFields.getWatersupplyMode() ?: ""
+        String elecsupplyMode = customFields.getElecsupplyMode() ?: ""
+        String gassupplyMode = customFields.getGassupplyMode() ?: ""
+        String heatsupplyMode = customFields.getHeatsupplyMode() ?: ""
+        String campAreaFrom = customFields.getCampAreaFrom() ?: "0"
+        String campAreaTo = customFields.getCampAreaTo() ?: String.valueOf(maxCampArea)
+
+        Float from = campAreaFrom as Float
+        Float to = campAreaTo as Float ?: maxCampArea
 
         Specification<VCampLocation> spec
 
         if (dknm.isEmpty() && dkmc.isEmpty() && campWord.isEmpty() && campCode.isEmpty() && detailAddress.isEmpty())
-            spec = Specifications.<VCampLocation>and()
+            spec = Specifications.<VCampLocation> and()
                     .like(isNotBlank(campKind), "campKind", campKind)
                     .like(isNotBlank(adminDivision), "adminDivision", adminDivision)
                     .like(isNotBlank(siteKind), "siteKind", siteKind)
@@ -77,10 +73,10 @@ class VCampLocationServiceImpl implements VCampLocationService {
                     .like(isNotBlank(elecsupplyMode), "elecsupplyMode", elecsupplyMode)
                     .like(isNotBlank(gassupplyMode), "gassupplyMode", gassupplyMode)
                     .like(isNotBlank(heatsupplyMode), "heatsupplyMode", heatsupplyMode)
-                    .between(campAreaBlankCheck, "campArea", from, to)
+                    .between(true, "campArea", from, to)
                     .build()
         else {
-            spec = Specifications.<VCampLocation>and()
+            spec = Specifications.<VCampLocation> and()
                     .like(isNotBlank(campKind), "campKind", campKind)
                     .like(isNotBlank(adminDivision), "adminDivision", adminDivision)
                     .like(isNotBlank(siteKind), "siteKind", siteKind)
@@ -88,21 +84,21 @@ class VCampLocationServiceImpl implements VCampLocationService {
                     .like(isNotBlank(elecsupplyMode), "elecsupplyMode", elecsupplyMode)
                     .like(isNotBlank(gassupplyMode), "gassupplyMode", gassupplyMode)
                     .like(isNotBlank(heatsupplyMode), "heatsupplyMode", heatsupplyMode)
-                    .between(campAreaBlankCheck, "campArea", from, to)
-                    .predicate(Specifications.<VCampLocation>or()
-                            .like(isNotBlank(dknm), "dknm", "%" + dknm + "%")
-                            .like(isNotBlank(dkmc), "dkmc", "%" + dkmc + "%")
-                            .like(isNotBlank(campWord), "campWord", "%" + campWord + "%")
-                            .like(isNotBlank(campCode), "campCode", "%" + campCode + "%")
-                            .like(isNotBlank(detailAddress), "detailAddress", "%" + detailAddress + "%")
-                            .build())
+                    .between(true, "campArea", from, to)
+                    .predicate(Specifications.<VCampLocation> or()
+                    .like(isNotBlank(dknm), "dknm", "%" + dknm + "%")
+                    .like(isNotBlank(dkmc), "dkmc", "%" + dkmc + "%")
+                    .like(isNotBlank(campWord), "campWord", "%" + campWord + "%")
+                    .like(isNotBlank(campCode), "campCode", "%" + campCode + "%")
+                    .like(isNotBlank(detailAddress), "detailAddress", "%" + detailAddress + "%")
+                    .build())
                     .build()
         }
 
         List<VCampLocation> vCampLocations = vCampLocationRepository.findAll(spec)
-        return vCampLocations.stream()
-                .map{vCampLocation -> converter.convert(vCampLocation)}
-                .collect(toList())
+        return vCampLocations.stream().
+                map { vCampLocation -> converter.convert(vCampLocation) }.
+                collect(toList())
     }
 
     @Override
@@ -114,7 +110,7 @@ class VCampLocationServiceImpl implements VCampLocationService {
     List<VCampLocationDTO> getVManagedCampLocationsByBdnm(String id) {
         List<String> bdnms = bddwmlService.getBdnmFamily(id)
         return bdnms.stream().
-                flatMap{bdnm -> getVCampLocationDTO(bdnm).stream()}.
+                flatMap { bdnm -> getVCampLocationDTO(bdnm).stream() }.
                 collect(toList())
     }
 
@@ -127,48 +123,23 @@ class VCampLocationServiceImpl implements VCampLocationService {
             vCampLocations = vCampLocationRepository.findByBdnm(bdnm, Sort.by("dknm"))
         }
         return vCampLocations.stream().
-                map{vCampLocation -> converter.convert(vCampLocation)}.
+                map { vCampLocation -> converter.convert(vCampLocation) }.
                 collect(toList())
-    }
-
-    @Override
-    List<VCampLocationDTO> queryCampLocationByRect(Double left, Double bottom, Double right, Double top) {
-        Set<String> dknms = new HashSet<>()
-        List<CampCoordinate> campCoordinates = campCoordinateRepository.findAll()
-        for (CampCoordinate campCoordinate : campCoordinates) {
-            Double x = Double.valueOf(campCoordinate.getCenterX())
-            Double y = Double.valueOf(campCoordinate.getCenterY())
-            if (x > left && x < right && y > bottom && y < top) { // ¼ìË÷Ìõ¼þ
-                String fid = campCoordinate.getFid()
-                dknms.add(fid)
-            }
-        }
-
-        List<VCampLocationDTO> results = new ArrayList<>()
-        dknms.forEach{dknm ->
-            convertToDTO(vCampLocationRepository, dknm)
-        }
-        return results
-    }
-
-    void convertToDTO(VCampLocationRepository vCampLocationRepository, String dknm) {
-        Optional<VCampLocation> optionalVCampLocation = vCampLocationRepository.findById(dknm)
-        optionalVCampLocation.ifPresent{vCampLocation -> converter.convert(vCampLocation)}
     }
 
     @Override
     List<VCampLocationDTO> queryCampLocationByPolygon(Polygon polygon) {
         List<CampCoordinate> campCoordinates = campCoordinateRepository.findAll()
-        Set<String> fids = campCoordinates.stream()
-                .filter{campCoordinate -> pointIsInPolygon(polygon, campCoordinate)}
-                .map{campCoordinate -> campCoordinate.fid}
-                .collect(toSet())
+        Set<String> fids = campCoordinates.stream().
+                filter { campCoordinate -> pointIsInPolygon(polygon, campCoordinate) }.
+                map { campCoordinate -> campCoordinate.fid }.
+                collect(toSet())
 
         List<VCampLocation> vCampLocations = vCampLocationRepository.findAll()
-        return vCampLocations.stream()
-                .filter{vCampLocation -> locationIsInFids(fids, vCampLocation)}
-                .map{ vCampLocation -> converter.convert(vCampLocation)}
-                .collect(toList())
+        return vCampLocations.stream().
+                filter { vCampLocation -> locationIsInFids(fids, vCampLocation) }.
+                map { vCampLocation -> converter.convert(vCampLocation) }.
+                collect(toList())
     }
 
     private boolean pointIsInPolygon(Polygon polygon, CampCoordinate coordinate) {
@@ -185,16 +156,16 @@ class VCampLocationServiceImpl implements VCampLocationService {
     @Override
     List<VCampLocationDTO> queryCampLocationByCircle(Double lat, Double lng, Double radius) {
         List<CampCoordinate> campCoordinates = campCoordinateRepository.findAll()
-        Set<String> fids = campCoordinates.stream()
-                .filter{campCoordinate -> pointIsInCircle(lat, lng, radius, campCoordinate)}
-                .map{campCoordinate -> campCoordinate.fid}
-                .collect(toSet())
+        Set<String> fids = campCoordinates.stream().
+                filter { campCoordinate -> pointIsInCircle(lat, lng, radius, campCoordinate) }.
+                map { campCoordinate -> campCoordinate.fid }.
+                collect(toSet())
 
         List<VCampLocation> vCampLocations = vCampLocationRepository.findAll()
-        return vCampLocations.stream()
-                .filter{vCampLocation -> locationIsInFids(fids, vCampLocation)}
-                .map{vCampLocation -> converter.convert(vCampLocation)}
-                .collect(toList())
+        return vCampLocations.stream().
+                filter { vCampLocation -> locationIsInFids(fids, vCampLocation) }.
+                map { vCampLocation -> converter.convert(vCampLocation) }.
+                collect(toList())
     }
 
     private boolean pointIsInCircle(Double lat, Double lng, Double radius, CampCoordinate coordinate) {

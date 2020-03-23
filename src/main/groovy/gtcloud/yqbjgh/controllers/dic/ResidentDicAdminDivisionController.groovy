@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController
 class ResidentDicAdminDivisionController {
 
     @Autowired
-    private ResidentDicAdminDivisionService service
+    ResidentDicAdminDivisionService service
 
-	@GetMapping(value = "/resident-dic-admin-division")
-	List<ResidentDicAdminDivision> getResidentDicAdminDivisionList() {
+    @GetMapping(value = "/resident-dic-admin-division")
+    List<ResidentDicAdminDivision> getResidentDicAdminDivisionList() {
         return service.listAll()
-	}
+    }
 }

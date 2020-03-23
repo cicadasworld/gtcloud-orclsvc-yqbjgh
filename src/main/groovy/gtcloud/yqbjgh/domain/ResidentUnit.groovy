@@ -40,7 +40,7 @@ class ResidentUnit {
 
     Integer civilRealityNum
 
-    String useingCampId
+    String usingCampId
 
     Integer officerorAuthorizedNum
 
@@ -49,5 +49,7 @@ class ResidentUnit {
     String remark
 
     String unitGrade
+
+    String usingApartNum
 
 }

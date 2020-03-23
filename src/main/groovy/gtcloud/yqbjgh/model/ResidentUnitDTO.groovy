@@ -32,7 +32,7 @@ class ResidentUnitDTO {
 
     Integer civilRealityNum
 
-    String useingCampId
+    String usingCampId
 
     Integer officerorAuthorizedNum
 
@@ -43,5 +43,7 @@ class ResidentUnitDTO {
     String unitGrade
 
     String mc
+
+    String usingApartNum
 
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicBatKindServiceImpl implements CampDicBatKindService {
 
     @Autowired
-    private CampDicBatKindRepository repository
+    CampDicBatKindRepository repository
 
     @Override
     CampDicBatKind getById(String id) {

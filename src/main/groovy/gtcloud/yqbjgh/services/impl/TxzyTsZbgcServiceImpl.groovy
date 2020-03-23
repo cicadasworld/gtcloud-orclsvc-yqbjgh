@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service
 @Service
 class TxzyTsZbgcServiceImpl implements TxzyTsZbgcService {
 
-	@Autowired
-    private TxzyTsZbgcRepository txzyTsZbgcRepo
+    @Autowired
+    TxzyTsZbgcRepository txzyTsZbgcRepo
 
     @Override
     TxzyTsZbgc getById(String id) {
         return txzyTsZbgcRepo.findById(id).orElse(null)
     }
 
-	@Override
-	List<TxzyTsZbgc> getBySjcjdwnm(String sjcjdwnm) {
-		return txzyTsZbgcRepo.findBySjcjdwnm(sjcjdwnm)
-	}
+    @Override
+    List<TxzyTsZbgc> getBySjcjdwnm(String sjcjdwnm) {
+        return txzyTsZbgcRepo.findBySjcjdwnm(sjcjdwnm)
+    }
 }

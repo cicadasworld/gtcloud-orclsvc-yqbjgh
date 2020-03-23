@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicUsingStatusServiceImpl implements CampDicUsingStatusService {
 
     @Autowired
-    private CampDicUsingStatusRepository repository
+    CampDicUsingStatusRepository repository
 
     @Override
     CampDicUsingStatus getById(String id) {

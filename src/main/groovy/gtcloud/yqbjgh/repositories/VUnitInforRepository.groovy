@@ -5,8 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface VUnitInforRepository extends JpaRepository<VUnitInfor, String> {
 
-	List<VUnitInfor> findAll()
+    List<VUnitInfor> findAll()
 
     Optional<VUnitInfor> findByBdnm(String bdnm)
+
+    List<VUnitInfor> findByUsingCampId(String campId)
+
+    List<VUnitInfor> findByUsingApartNum(String apartNum)
 
 }

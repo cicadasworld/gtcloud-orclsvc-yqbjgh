@@ -14,20 +14,16 @@ import static java.util.stream.Collectors.toList
 class CampStaffHousingServiceImpl implements CampStaffHousingService {
 
     @Autowired
-    private CampStaffHousingRepository repository
+    CampStaffHousingRepository repository
 
     @Autowired
-    private CampStaffHousingToCampStaffHousingDTO converter
+    CampStaffHousingToCampStaffHousingDTO converter
 
     @Override
     List<CampStaffHousingDTO> getCampStaffHousing(String apartId) {
-        List<CampStaffHousing> campStaffHousings = this.getByApartId(apartId)
-        return campStaffHousings.stream()
-                .map{campStaffHousing -> converter.convert(campStaffHousing)}
-                .collect(toList())
-    }
-
-    List<CampStaffHousing> getByApartId(String apartId) {
-        return repository.findByApartId(apartId)
+        List<CampStaffHousing> campStaffHousings = repository.findByApartId(apartId)
+        return campStaffHousings.stream().
+                map { campStaffHousing -> converter.convert(campStaffHousing) }.
+                collect(toList())
     }
 }

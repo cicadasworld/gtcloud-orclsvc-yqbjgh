@@ -13,11 +13,11 @@ import static java.util.stream.Collectors.toList
 @Service
 class CampWarehouseMaterialServiceImpl implements CampWarehouseMaterialService {
 
-	@Autowired
-    private CampWarehouseMaterialRepository repository
+    @Autowired
+    CampWarehouseMaterialRepository repository
 
     @Autowired
-    private CampWarehouseMaterialToCampWarehouseMaterialDTO converter
+    CampWarehouseMaterialToCampWarehouseMaterialDTO converter
 
     @Override
     CampWarehouseMaterial getById(String id) {
@@ -27,8 +27,8 @@ class CampWarehouseMaterialServiceImpl implements CampWarehouseMaterialService {
     @Override
     List<CampWarehouseMaterialDTO> getCampWarehouseMaterial(String warehouseId) {
         List<CampWarehouseMaterial> campWarehouseMaterials = repository.findByWarehouseId(warehouseId)
-        return campWarehouseMaterials.stream()
-                .map{campWarehouseMaterial -> converter.convert(campWarehouseMaterial)}
-                .collect(toList())
+        return campWarehouseMaterials.stream().
+                map { campWarehouseMaterial -> converter.convert(campWarehouseMaterial) }.
+                collect(toList())
     }
 }

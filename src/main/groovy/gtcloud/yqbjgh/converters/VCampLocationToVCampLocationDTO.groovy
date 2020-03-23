@@ -1,6 +1,5 @@
 package gtcloud.yqbjgh.converters
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import gtcloud.yqbjgh.domain.VApartCoordinateJson
 import gtcloud.yqbjgh.domain.VCampLocation
@@ -17,13 +16,13 @@ import static java.util.stream.Collectors.toList
 class VCampLocationToVCampLocationDTO implements Converter<VCampLocation, VCampLocationDTO> {
 
     @Autowired
-    private VApartCoordinateJsonRepository vApartCoordinateJsonRepository
+    VApartCoordinateJsonRepository vApartCoordinateJsonRepository
 
     @Autowired
-    private ObjectMapper objectMapper
+    ObjectMapper objectMapper
 
     @Override
-	VCampLocationDTO convert(VCampLocation source) {
+    VCampLocationDTO convert(VCampLocation source) {
         final String dknm = source.getDknm()
         final String bdnm = source.getBdnm()
         VCampLocationDTO target = new VCampLocationDTO()
@@ -45,7 +44,7 @@ class VCampLocationToVCampLocationDTO implements Converter<VCampLocation, VCampL
         target.siteKind = source.siteKind
 
         List<VApartCoordinateJson> vApartCoordinateJsons = vApartCoordinateJsonRepository.findByCampId(dknm)
-        List<ApartInfo> aparts = vApartCoordinateJsons.stream().map{vApartCoordinateJson ->
+        List<ApartInfo> aparts = vApartCoordinateJsons.stream().map { vApartCoordinateJson ->
             deserializeApart(vApartCoordinateJson)
         }.collect(toList())
         target.aparts = aparts
@@ -53,18 +52,14 @@ class VCampLocationToVCampLocationDTO implements Converter<VCampLocation, VCampL
         target.lineColor = source.lineColor
         target.fillColor = source.fillColor
         target.fillOpacity = source.fillOpacity
+        target.realorvirtual = source.realorvirtual
 
         return target
-	}
+    }
 
     ApartInfo deserializeApart(VApartCoordinateJson vApartCoordinateJson) {
         String apartInfo = vApartCoordinateJson.getApartInfo()
-        try {
-            ApartInfo apart = objectMapper.readValue(apartInfo, ApartInfo)
-            return apart
-        } catch (IOException e) {
-            e.printStackTrace()
-        }
-        return null
+        ApartInfo apart = objectMapper.readValue(apartInfo, ApartInfo)
+        return apart
     }
 }

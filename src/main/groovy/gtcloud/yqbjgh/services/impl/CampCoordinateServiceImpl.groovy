@@ -2,7 +2,6 @@ package gtcloud.yqbjgh.services.impl
 
 import gtcloud.yqbjgh.converters.CampCoordinateToCampCoordinateDTO
 import gtcloud.yqbjgh.domain.CampCoordinate
-
 import gtcloud.yqbjgh.model.CampCoordinateDTO
 import gtcloud.yqbjgh.repositories.CampCoordinateRepository
 import gtcloud.yqbjgh.services.CampCoordinateService
@@ -20,26 +19,26 @@ import static java.util.stream.Collectors.toList
 class CampCoordinateServiceImpl implements CampCoordinateService {
 
     @Autowired
-    private CampCoordinateRepository repository
+    CampCoordinateRepository repository
 
     @Autowired
-    private CampCoordinateToCampCoordinateDTO converter
+    CampCoordinateToCampCoordinateDTO converter
 
     @Autowired
-    private GeometryFactory geometryFactory
+    GeometryFactory geometryFactory
 
     private List<CampCoordinate> deleteByFid(String fid) {
         List<CampCoordinate> campCoordinates = repository.findByFid(fid, Sort.by("coordinateNum"))
-        campCoordinates.forEach{campCoordinate -> repository.deleteById(campCoordinate.getJlbm())}
+        campCoordinates.forEach { campCoordinate -> repository.deleteById(campCoordinate.getJlbm()) }
         return campCoordinates
     }
 
     @Override
     List<CampCoordinateDTO> getCampCoordinateByFid(String fid) {
         final List<CampCoordinate> campCoordinates = repository.findByFid(fid, Sort.by("coordinateNum"))
-        return campCoordinates.stream()
-                .map{campCoordinate -> converter.convert(campCoordinate)}
-                .collect(toList())
+        return campCoordinates.stream().
+                map { campCoordinate -> converter.convert(campCoordinate) }.
+                collect(toList())
     }
 
     @Override
@@ -108,7 +107,8 @@ class CampCoordinateServiceImpl implements CampCoordinateService {
     @Override
     List<CampCoordinateDTO> deleteCampCoordinates(String fid) {
         List<CampCoordinate> campCoordinates = this.deleteByFid(fid)
-        return campCoordinates.stream().map{campCoordinate ->
-                converter.convert(campCoordinate)}.collect(toList())
+        return campCoordinates.stream().
+                map { campCoordinate -> converter.convert(campCoordinate) }.
+                collect(toList())
     }
 }

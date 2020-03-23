@@ -1,5 +1,6 @@
 package gtcloud.yqbjgh.controllers
 
+import gtcloud.yqbjgh.model.StaffStatistics
 import gtcloud.yqbjgh.model.VUnitInforDTO
 import gtcloud.yqbjgh.services.VUnitInforService
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,10 +12,21 @@ import org.springframework.web.bind.annotation.RestController
 class UnitInforController {
 
     @Autowired
-    private VUnitInforService service
+    VUnitInforService service
 
     @GetMapping(value = "/v-unit-infor/bdnm/{bdnm}")
     VUnitInforDTO getVUnitInforBybdnm(@PathVariable String bdnm) {
         return service.getVUnitInforBybdnm(bdnm)
     }
+
+    @GetMapping(value = "/v-unit-infor/campid/{campId}")
+    StaffStatistics getVUnitInforByCampId(@PathVariable String campId) {
+        return service.getVUnitInforByCampId(campId)
+    }
+
+    @GetMapping(value = "/v-unit-infor/apartnum/{apartNum}")
+    StaffStatistics getVUnitInforByApartNum(@PathVariable String apartNum) {
+        return service.getVUnitInforByApartNum(apartNum)
+    }
+
 }

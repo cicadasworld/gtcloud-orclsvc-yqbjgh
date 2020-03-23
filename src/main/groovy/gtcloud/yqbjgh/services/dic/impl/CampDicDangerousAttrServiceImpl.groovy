@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class CampDicDangerousAttrServiceImpl implements CampDicDangerousAttrService {
 
     @Autowired
-    private CampDicDangerousAttrRepository repository
+    CampDicDangerousAttrRepository repository
 
     @Override
     CampDicDangerousAttr getById(String id) {

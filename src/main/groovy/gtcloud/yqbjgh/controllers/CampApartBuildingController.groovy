@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController
 class CampApartBuildingController {
 
     @Autowired
-    private CampApartBuildingService service
+    CampApartBuildingService service
 
-	@GetMapping(value = "/camp-apart-building/{jlbm}")
-	CampApartBuildingDTO getCampApartBuilding(@PathVariable String jlbm) {
-		return service.getById(jlbm)
-	}
+    @GetMapping(value = "/camp-apart-building/{jlbm}")
+    CampApartBuildingDTO getCampApartBuilding(@PathVariable String jlbm) {
+        return service.getById(jlbm)
+    }
 
     @GetMapping(value = "/camp-apart-building/campid/{campId}")
     List<CampApartBuildingDTO> getCampApartBuildingByCampId(@PathVariable String campId) {

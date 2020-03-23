@@ -15,43 +15,46 @@ import org.springframework.stereotype.Component
 @Component
 class CampTrainingFieldToCampTrainingFieldDTO implements Converter<CampTrainingField, CampTrainingFieldDTO> {
 
-	@Autowired
-	private CampDicTrafieldKindRepository campDicTrafieldKindRepository
-
-	@Autowired
-    private CampDicTraUsingConditionRepository campDicTraUsingConditionRepository
+    @Autowired
+    CampDicTrafieldKindRepository campDicTrafieldKindRepository
 
     @Autowired
-    private TxzhTsBddwmlRepository txzhTsBddwmlRepository
+    CampDicTraUsingConditionRepository campDicTraUsingConditionRepository
 
-	@Override
-	CampTrainingFieldDTO convert(CampTrainingField source) {
+    @Autowired
+    TxzhTsBddwmlRepository txzhTsBddwmlRepository
+
+    @Override
+    CampTrainingFieldDTO convert(CampTrainingField source) {
         CampTrainingFieldDTO target = new CampTrainingFieldDTO()
         target.campId = source.campId
         target.jlbm = source.jlbm
 
-        Optional<TxzhTsBddwml> optionalTxzhTsBddwml =
-                txzhTsBddwmlRepository.findById(source.managementUnit)
-        optionalTxzhTsBddwml.ifPresent{txzhTsBddwml ->
-                target.managementUnit = txzhTsBddwml.mc}
+        // managementUnit -> bdÃû³Æ
+        String managementUnit = source.managementUnit
+        Optional<TxzhTsBddwml> optTxzhTsBddwml = txzhTsBddwmlRepository.findById(managementUnit ?: "")
+        optTxzhTsBddwml.ifPresent { txzhTsBddwml ->
+            target.managementUnit = txzhTsBddwml.mc
+        }
 
         target.sjcjry = source.sjcjry
         target.sjcjsj = source.sjcjsj
         target.traArea = source.traArea
 
-        Optional<CampDicTrafieldKind> optionalCampDicTrafieldKind =
-                campDicTrafieldKindRepository.findById(source.traKind)
-        optionalCampDicTrafieldKind.ifPresent{campDicTrafieldKind ->
-                target.traKind = campDicTrafieldKind.mc}
+        // traKind -> traKindÃû³Æ
+        String traKind = source.traKind
+        Optional<CampDicTrafieldKind> optTrafieldKind = campDicTrafieldKindRepository.findById(traKind ?: "")
+        optTrafieldKind.ifPresent { dic -> target.traKind = dic.mc }
 
         target.traName = source.traName
 
-        Optional<CampDicTraUsingCondition> optionalCampDicTraUsingCondition =
-                campDicTraUsingConditionRepository.findById(source.traUsingCondition)
-        optionalCampDicTraUsingCondition.ifPresent{campDicTraUsingCondition ->
-                target.traUsingCondition = campDicTraUsingCondition.mc}
+        // traUsingCondition -> traUsingConditionÃû³Æ
+        String traUsingCondition = source.traUsingCondition
+        Optional<CampDicTraUsingCondition> optTraUsingCondition =
+                campDicTraUsingConditionRepository.findById(traUsingCondition ?: "")
+        optTraUsingCondition.ifPresent { dic -> target.traUsingCondition = dic.mc }
 
-		return target
-	}
+        return target
+    }
 
 }

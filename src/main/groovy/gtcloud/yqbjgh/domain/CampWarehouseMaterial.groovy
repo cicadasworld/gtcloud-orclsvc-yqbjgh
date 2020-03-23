@@ -8,24 +8,24 @@ import javax.persistence.Id
 @Entity
 class CampWarehouseMaterial {
 
-	@Id
-	String jlbm
+    @Id
+    String jlbm
 
-	Float warArea
+    Float warArea
 
-	String materialKind
+    String materialKind
 
-	String dangerousAttr
+    String dangerousAttr
 
-	String warehouseId
+    String warehouseId
 
-	Float ccwzsl
+    Float ccwzsl
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	Date sjcjsj
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    Date sjcjsj
 
-	String sjcjry
+    String sjcjry
 
-	String campId
+    String campId
 
 }

@@ -11,7 +11,7 @@ interface TxzhTsBddwmlService {
 
     List<BddwmlNode> getUsingTree(String unitKind)
 
-    Map<String,BddwmlNode> getUsingTreeMap()
+    Map<String, BddwmlNode> getUsingTreeMap()
 
     List<String> getRootIds()
 

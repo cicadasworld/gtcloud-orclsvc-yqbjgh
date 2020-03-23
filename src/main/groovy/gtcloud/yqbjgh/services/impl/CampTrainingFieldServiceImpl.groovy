@@ -13,21 +13,17 @@ import static java.util.stream.Collectors.toList
 @Service
 class CampTrainingFieldServiceImpl implements CampTrainingFieldService {
 
-	@Autowired
-    private CampTrainingFieldRepository repository
+    @Autowired
+    CampTrainingFieldRepository repository
 
     @Autowired
-    private CampTrainingFieldToCampTrainingFieldDTO converter
+    CampTrainingFieldToCampTrainingFieldDTO converter
 
     @Override
     List<CampTrainingFieldDTO> getCampTrainingField(String campId) {
-        final List<CampTrainingField> campTrainingFields = this.getByCampId(campId)
-        return campTrainingFields.stream()
-                .map{campTrainingField -> converter.convert(campTrainingField)}
-                .collect(toList())
-    }
-
-    List<CampTrainingField> getByCampId(String campId) {
-        return repository.findByCampId(campId)
+        final List<CampTrainingField> campTrainingFields = repository.findByCampId(campId)
+        return campTrainingFields.stream().
+                map { campTrainingField -> converter.convert(campTrainingField) }.
+                collect(toList())
     }
 }
