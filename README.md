@@ -23,9 +23,9 @@
 ]
 ```
 
-##单位名录树相关服务接口
+##公司相关服务接口
 
-###获取整个管理单位树
+###获取整个管理公司目录
 
 #### 请求
 - 方法: **GET**
@@ -69,7 +69,7 @@
 
 ```
 
-###根据自定义字段查询坐落情况
+###根据自定义字段查询公司位置情况
 
 #### 请求
 - 方法: **POST**
@@ -85,7 +85,7 @@
       "detailAddress": "BeijingXXXX区XXXX路XXXXXX号BeijingXXXX区XXXX路XXXXXX号BeijingXXXX区XXXX路XXXXXX号",
       "campKind": "小区",
       "adminDivision": "Beijing",
-      "siteKind": "住用",
+      "siteKind": "办公",
       "watersupplyMode": "市政",
       "elecsupplyMode": "市政",
       "gassupplyMode": "市政",
@@ -114,7 +114,7 @@
       "adminDivision": "Beijing",
       "detailAddress": "BeijingXXXX区XXXX路XXXXXX号BeijingXXXX区XXXX路XXXXXX号BeijingXXXX区XXXX路XXXXXX号",
       "campArea": 99352,
-      "siteKind": "住用",
+      "siteKind": "办公",
       "watersupplyMode": "市政",
       "elecsupplyMode": "市政",
       "gassupplyMode": "市政",
@@ -123,10 +123,10 @@
       "centerY": "39.918466018814016"
     }
   ]
-}   
+}
 ```
 
-###编辑Block点坐标
+###编辑办公楼点坐标
 
 #### 请求
 - 方法: **PUT**
@@ -149,10 +149,10 @@
 		centerX: "116.048859358527",
 		centerY: "39.4509019952184"
     }
-]  
+]
 ```
 
-###删除Block点坐标
+###删除办公楼点坐标
 
 #### 请求
 - 方法: **DELETE**
@@ -165,5 +165,5 @@
 #### 响应
 - 响应体
 ```
- 
+
 ```
